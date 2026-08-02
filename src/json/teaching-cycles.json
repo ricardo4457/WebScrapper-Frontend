@@ -1,0 +1,24 @@
+[
+  {
+    "anos": ["1º Ano", "2º Ano", "3º Ano", "4º Ano"],
+    "tipos_ensino": ["Ensino Básico (1º Ciclo)"]
+  },
+  {
+    "anos": ["5º Ano", "6º Ano"],
+    "tipos_ensino": ["Ensino Básico (2º Ciclo)"]
+  },
+  {
+    "anos": ["7º Ano", "8º Ano", "9º Ano"],
+    "tipos_ensino": [
+      "Ensino Básico (3º Ciclo)",
+      "Ensino Básico Cursos Educação e Formação (CEF)"
+    ]
+  },
+  {
+    "anos": ["10º Ano", "11º Ano", "12º Ano"],
+    "tipos_ensino": [
+      "Ensino Secundário - Cursos Científico-Humanísticos",
+      "Ensino Secundário - Cursos Profissionais"
+    ]
+  }
+]
