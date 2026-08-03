@@ -14,12 +14,12 @@ const routes = [
   {
     path: '/books',
     name: 'books',
-    component: () => import('@/views/BooksView.vue'),
+    component: () => import('@/views/books/BooksView.vue'),
   },
   {
     path: '/books/:id',
     name: 'book-detail',
-    component: () => import('@/views/BookDetailView.vue'),
+    component: () => import('@/views/books/BooksDetailView.vue'),
     props: true,
   },
   {
