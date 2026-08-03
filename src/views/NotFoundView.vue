@@ -1,7 +1,7 @@
 <template>
   <PageContainer>
-    <PageTitle text="Wook Scraper" />
-    <p class="text-body-1">Pesquisa manuais escolares e consulta o histórico de preços.</p>
+    <PageTitle text="Página não encontrada" />
+    <v-btn color="primary" :to="{ name: 'home' }">Voltar ao início</v-btn>
   </PageContainer>
 </template>
 

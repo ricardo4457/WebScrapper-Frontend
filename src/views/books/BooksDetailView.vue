@@ -1,7 +1,6 @@
 <template>
   <PageContainer>
-    <PageTitle text="Wook Scraper" />
-    <p class="text-body-1">Pesquisa manuais escolares e consulta o histórico de preços.</p>
+    <PageTitle text="Escolas" />
   </PageContainer>
 </template>
 
