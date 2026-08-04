@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
+import BottomNavigation from '@/components/layout/BottomNavigation.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import AppHeader from '@/components/layout/AppHeader.vue'
     <v-main>
       <router-view />
     </v-main>
+    <BottomNavigation />
   </v-app>
 </template>
 
