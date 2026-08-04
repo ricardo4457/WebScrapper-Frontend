@@ -1,0 +1,2421 @@
+{
+  "distritos": [
+    {
+      "name": "Aveiro",
+      "coordenadas": {
+        "lat": 40.6794819,
+        "lon": -8.43660055
+      },
+      "concelhos": [
+        {
+          "name": "Águeda",
+          "coordenadas": {
+            "lat": 40.57,
+            "lon": -8.45
+          }
+        },
+        {
+          "name": "Albergaria-a-Velha",
+          "coordenadas": {
+            "lat": 40.69,
+            "lon": -8.48
+          }
+        },
+        {
+          "name": "Anadia",
+          "coordenadas": {
+            "lat": 40.43,
+            "lon": -8.44
+          }
+        },
+        {
+          "name": "Arouca",
+          "coordenadas": {
+            "lat": 40.93,
+            "lon": -8.24
+          }
+        },
+        {
+          "name": "Aveiro",
+          "coordenadas": {
+            "lat": 40.64,
+            "lon": -8.65
+          }
+        },
+        {
+          "name": "Castelo de Paiva",
+          "coordenadas": {
+            "lat": 41.03,
+            "lon": -8.28
+          }
+        },
+        {
+          "name": "Espinho",
+          "coordenadas": {
+            "lat": 41.01,
+            "lon": -8.64
+          }
+        },
+        {
+          "name": "Estarreja",
+          "coordenadas": {
+            "lat": 40.75,
+            "lon": -8.57
+          }
+        },
+        {
+          "name": "Ílhavo",
+          "coordenadas": {
+            "lat": 40.6,
+            "lon": -8.67
+          }
+        },
+        {
+          "name": "Mealhada",
+          "coordenadas": {
+            "lat": 40.37,
+            "lon": -8.45
+          }
+        },
+        {
+          "name": "Murtosa",
+          "coordenadas": {
+            "lat": 40.74,
+            "lon": -8.64
+          }
+        },
+        {
+          "name": "Oliveira de Azeméis",
+          "coordenadas": {
+            "lat": 40.84,
+            "lon": -8.48
+          }
+        },
+        {
+          "name": "Oliveira do Bairro",
+          "coordenadas": {
+            "lat": 40.52,
+            "lon": -8.5
+          }
+        },
+        {
+          "name": "Ovar",
+          "coordenadas": {
+            "lat": 40.86,
+            "lon": -8.63
+          }
+        },
+        {
+          "name": "Santa Maria da Feira",
+          "coordenadas": {
+            "lat": 40.93,
+            "lon": -8.55
+          }
+        },
+        {
+          "name": "São João da Madeira",
+          "coordenadas": {
+            "lat": 40.9,
+            "lon": -8.49
+          }
+        },
+        {
+          "name": "Sever do Vouga",
+          "coordenadas": {
+            "lat": 40.75,
+            "lon": -8.37
+          }
+        },
+        {
+          "name": "Vagos",
+          "coordenadas": {
+            "lat": 40.56,
+            "lon": -8.68
+          }
+        },
+        {
+          "name": "Vale de Cambra",
+          "coordenadas": {
+            "lat": 40.84,
+            "lon": -8.4
+          }
+        }
+      ]
+    },
+    {
+      "name": "Beja",
+      "coordenadas": {
+        "lat": 37.8250414,
+        "lon": -7.8755168
+      },
+      "concelhos": [
+        {
+          "name": "Aljustrel",
+          "coordenadas": {
+            "lat": 37.88,
+            "lon": -8.16
+          }
+        },
+        {
+          "name": "Almodôvar",
+          "coordenadas": {
+            "lat": 37.51,
+            "lon": -8.07
+          }
+        },
+        {
+          "name": "Alvito",
+          "coordenadas": {
+            "lat": 38.25,
+            "lon": -8.0
+          }
+        },
+        {
+          "name": "Barrancos",
+          "coordenadas": {
+            "lat": 38.14,
+            "lon": -6.98
+          }
+        },
+        {
+          "name": "Beja",
+          "coordenadas": {
+            "lat": 38.02,
+            "lon": -7.87
+          }
+        },
+        {
+          "name": "Castro Verde",
+          "coordenadas": {
+            "lat": 37.7,
+            "lon": -8.09
+          }
+        },
+        {
+          "name": "Cuba",
+          "coordenadas": {
+            "lat": 38.16,
+            "lon": -7.9
+          }
+        },
+        {
+          "name": "Ferreira do Alentejo",
+          "coordenadas": {
+            "lat": 38.05,
+            "lon": -8.12
+          }
+        },
+        {
+          "name": "Mértola",
+          "coordenadas": {
+            "lat": 37.64,
+            "lon": -7.66
+          }
+        },
+        {
+          "name": "Moura",
+          "coordenadas": {
+            "lat": 38.14,
+            "lon": -7.45
+          }
+        },
+        {
+          "name": "Odemira",
+          "coordenadas": {
+            "lat": 37.6,
+            "lon": -8.64
+          }
+        },
+        {
+          "name": "Ourique",
+          "coordenadas": {
+            "lat": 37.65,
+            "lon": -8.23
+          }
+        },
+        {
+          "name": "Serpa",
+          "coordenadas": {
+            "lat": 37.94,
+            "lon": -7.6
+          }
+        },
+        {
+          "name": "Vidigueira",
+          "coordenadas": {
+            "lat": 38.21,
+            "lon": -7.8
+          }
+        }
+      ]
+    },
+    {
+      "name": "Braga",
+      "coordenadas": {
+        "lat": 41.5697147,
+        "lon": -8.31112555
+      },
+      "concelhos": [
+        {
+          "name": "Amares",
+          "coordenadas": {
+            "lat": 41.63,
+            "lon": -8.35
+          }
+        },
+        {
+          "name": "Barcelos",
+          "coordenadas": {
+            "lat": 41.53,
+            "lon": -8.62
+          }
+        },
+        {
+          "name": "Braga",
+          "coordenadas": {
+            "lat": 41.55,
+            "lon": -8.42
+          }
+        },
+        {
+          "name": "Cabeceiras de Basto",
+          "coordenadas": {
+            "lat": 41.52,
+            "lon": -7.98
+          }
+        },
+        {
+          "name": "Celorico de Basto",
+          "coordenadas": {
+            "lat": 41.4,
+            "lon": -8.0
+          }
+        },
+        {
+          "name": "Esposende",
+          "coordenadas": {
+            "lat": 41.54,
+            "lon": -8.78
+          }
+        },
+        {
+          "name": "Fafe",
+          "coordenadas": {
+            "lat": 41.45,
+            "lon": -8.16
+          }
+        },
+        {
+          "name": "Guimarães",
+          "coordenadas": {
+            "lat": 41.44,
+            "lon": -8.29
+          }
+        },
+        {
+          "name": "Póvoa de Lanhoso",
+          "coordenadas": {
+            "lat": 41.58,
+            "lon": -8.27
+          }
+        },
+        {
+          "name": "Terras de Bouro",
+          "coordenadas": {
+            "lat": 41.71,
+            "lon": -8.31
+          }
+        },
+        {
+          "name": "Vieira do Minho",
+          "coordenadas": {
+            "lat": 41.63,
+            "lon": -8.14
+          }
+        },
+        {
+          "name": "Vila Nova de Famalicão",
+          "coordenadas": {
+            "lat": 41.41,
+            "lon": -8.52
+          }
+        },
+        {
+          "name": "Vila Verde",
+          "coordenadas": {
+            "lat": 41.65,
+            "lon": -8.44
+          }
+        },
+        {
+          "name": "Vizela",
+          "coordenadas": {
+            "lat": 41.38,
+            "lon": -8.3
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bragança",
+      "coordenadas": {
+        "lat": 41.5085318,
+        "lon": -6.8105256999999995
+      },
+      "concelhos": [
+        {
+          "name": "Alfândega da Fé",
+          "coordenadas": {
+            "lat": 41.35,
+            "lon": -6.97
+          }
+        },
+        {
+          "name": "Bragança",
+          "coordenadas": {
+            "lat": 41.81,
+            "lon": -6.76
+          }
+        },
+        {
+          "name": "Carrazeda de Ansiães",
+          "coordenadas": {
+            "lat": 41.24,
+            "lon": -7.3
+          }
+        },
+        {
+          "name": "Freixo de Espada à Cinta",
+          "coordenadas": {
+            "lat": 41.09,
+            "lon": -6.79
+          }
+        },
+        {
+          "name": "Macedo de Cavaleiros",
+          "coordenadas": {
+            "lat": 41.53,
+            "lon": -6.96
+          }
+        },
+        {
+          "name": "Miranda do Douro",
+          "coordenadas": {
+            "lat": 41.5,
+            "lon": -6.27
+          }
+        },
+        {
+          "name": "Mirandela",
+          "coordenadas": {
+            "lat": 41.49,
+            "lon": -7.19
+          }
+        },
+        {
+          "name": "Mogadouro",
+          "coordenadas": {
+            "lat": 41.34,
+            "lon": -6.71
+          }
+        },
+        {
+          "name": "Torre de Moncorvo",
+          "coordenadas": {
+            "lat": 41.17,
+            "lon": -7.05
+          }
+        },
+        {
+          "name": "Vila Flor",
+          "coordenadas": {
+            "lat": 41.31,
+            "lon": -7.15
+          }
+        },
+        {
+          "name": "Vimioso",
+          "coordenadas": {
+            "lat": 41.59,
+            "lon": -6.53
+          }
+        },
+        {
+          "name": "Vinhais",
+          "coordenadas": {
+            "lat": 41.83,
+            "lon": -7.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Castelo Branco",
+      "coordenadas": {
+        "lat": 39.97674835,
+        "lon": -7.57845425
+      },
+      "concelhos": [
+        {
+          "name": "Belmonte",
+          "coordenadas": {
+            "lat": 40.36,
+            "lon": -7.35
+          }
+        },
+        {
+          "name": "Castelo Branco",
+          "coordenadas": {
+            "lat": 39.82,
+            "lon": -7.49
+          }
+        },
+        {
+          "name": "Covilhã",
+          "coordenadas": {
+            "lat": 40.28,
+            "lon": -7.5
+          }
+        },
+        {
+          "name": "Fundão",
+          "coordenadas": {
+            "lat": 40.14,
+            "lon": -7.5
+          }
+        },
+        {
+          "name": "Idanha-a-Nova",
+          "coordenadas": {
+            "lat": 39.93,
+            "lon": -7.24
+          }
+        },
+        {
+          "name": "Oleiros",
+          "coordenadas": {
+            "lat": 39.92,
+            "lon": -7.92
+          }
+        },
+        {
+          "name": "Penamacor",
+          "coordenadas": {
+            "lat": 40.17,
+            "lon": -7.17
+          }
+        },
+        {
+          "name": "Proença-a-Nova",
+          "coordenadas": {
+            "lat": 39.75,
+            "lon": -7.92
+          }
+        },
+        {
+          "name": "Sertã",
+          "coordenadas": {
+            "lat": 39.8,
+            "lon": -8.1
+          }
+        },
+        {
+          "name": "Vila de Rei",
+          "coordenadas": {
+            "lat": 39.67,
+            "lon": -8.15
+          }
+        },
+        {
+          "name": "Vila Velha de Ródão",
+          "coordenadas": {
+            "lat": 39.65,
+            "lon": -7.66
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coimbra",
+      "coordenadas": {
+        "lat": 40.222075700000005,
+        "lon": -8.3204996
+      },
+      "concelhos": [
+        {
+          "name": "Arganil",
+          "coordenadas": {
+            "lat": 40.22,
+            "lon": -8.05
+          }
+        },
+        {
+          "name": "Cantanhede",
+          "coordenadas": {
+            "lat": 40.35,
+            "lon": -8.6
+          }
+        },
+        {
+          "name": "Coimbra",
+          "coordenadas": {
+            "lat": 40.21,
+            "lon": -8.43
+          }
+        },
+        {
+          "name": "Condeixa-a-Nova",
+          "coordenadas": {
+            "lat": 40.11,
+            "lon": -8.5
+          }
+        },
+        {
+          "name": "Figueira da Foz",
+          "coordenadas": {
+            "lat": 40.15,
+            "lon": -8.86
+          }
+        },
+        {
+          "name": "Góis",
+          "coordenadas": {
+            "lat": 40.15,
+            "lon": -8.13
+          }
+        },
+        {
+          "name": "Lousã",
+          "coordenadas": {
+            "lat": 40.12,
+            "lon": -8.25
+          }
+        },
+        {
+          "name": "Mira",
+          "coordenadas": {
+            "lat": 40.44,
+            "lon": -8.74
+          }
+        },
+        {
+          "name": "Miranda do Corvo",
+          "coordenadas": {
+            "lat": 40.09,
+            "lon": -8.34
+          }
+        },
+        {
+          "name": "Montemor-o-Velho",
+          "coordenadas": {
+            "lat": 40.17,
+            "lon": -8.68
+          }
+        },
+        {
+          "name": "Oliveira do Hospital",
+          "coordenadas": {
+            "lat": 40.36,
+            "lon": -7.86
+          }
+        },
+        {
+          "name": "Pampilhosa da Serra",
+          "coordenadas": {
+            "lat": 40.03,
+            "lon": -7.92
+          }
+        },
+        {
+          "name": "Penacova",
+          "coordenadas": {
+            "lat": 40.27,
+            "lon": -8.28
+          }
+        },
+        {
+          "name": "Penela",
+          "coordenadas": {
+            "lat": 40.03,
+            "lon": -8.39
+          }
+        },
+        {
+          "name": "Soure",
+          "coordenadas": {
+            "lat": 40.06,
+            "lon": -8.63
+          }
+        },
+        {
+          "name": "Tábua",
+          "coordenadas": {
+            "lat": 40.37,
+            "lon": -8.04
+          }
+        },
+        {
+          "name": "Vila Nova de Poiares",
+          "coordenadas": {
+            "lat": 40.22,
+            "lon": -8.26
+          }
+        }
+      ]
+    },
+    {
+      "name": "Faro",
+      "coordenadas": {
+        "lat": 37.2454206,
+        "lon": -8.1954249
+      },
+      "concelhos": [
+        {
+          "name": "Albufeira",
+          "coordenadas": {
+            "lat": 37.09,
+            "lon": -8.25
+          }
+        },
+        {
+          "name": "Alcoutim",
+          "coordenadas": {
+            "lat": 37.47,
+            "lon": -7.47
+          }
+        },
+        {
+          "name": "Aljezur",
+          "coordenadas": {
+            "lat": 37.32,
+            "lon": -8.8
+          }
+        },
+        {
+          "name": "Castro Marim",
+          "coordenadas": {
+            "lat": 37.22,
+            "lon": -7.44
+          }
+        },
+        {
+          "name": "Faro",
+          "coordenadas": {
+            "lat": 37.02,
+            "lon": -7.93
+          }
+        },
+        {
+          "name": "Lagoa",
+          "coordenadas": {
+            "lat": 37.13,
+            "lon": -8.45
+          }
+        },
+        {
+          "name": "Lagos",
+          "coordenadas": {
+            "lat": 37.1,
+            "lon": -8.67
+          }
+        },
+        {
+          "name": "Loulé",
+          "coordenadas": {
+            "lat": 37.14,
+            "lon": -8.02
+          }
+        },
+        {
+          "name": "Monchique",
+          "coordenadas": {
+            "lat": 37.32,
+            "lon": -8.55
+          }
+        },
+        {
+          "name": "Olhão",
+          "coordenadas": {
+            "lat": 37.03,
+            "lon": -7.84
+          }
+        },
+        {
+          "name": "Portimão",
+          "coordenadas": {
+            "lat": 37.14,
+            "lon": -8.54
+          }
+        },
+        {
+          "name": "São Brás de Alportel",
+          "coordenadas": {
+            "lat": 37.15,
+            "lon": -7.89
+          }
+        },
+        {
+          "name": "Silves",
+          "coordenadas": {
+            "lat": 37.19,
+            "lon": -8.44
+          }
+        },
+        {
+          "name": "Tavira",
+          "coordenadas": {
+            "lat": 37.13,
+            "lon": -7.65
+          }
+        },
+        {
+          "name": "Vila do Bispo",
+          "coordenadas": {
+            "lat": 37.08,
+            "lon": -8.9
+          }
+        },
+        {
+          "name": "Vila Real de Santo António",
+          "coordenadas": {
+            "lat": 37.2,
+            "lon": -7.42
+          }
+        }
+      ]
+    },
+    {
+      "name": "Guarda",
+      "coordenadas": {
+        "lat": 40.7046352,
+        "lon": -7.3150937
+      },
+      "concelhos": [
+        {
+          "name": "Aguiar da Beira",
+          "coordenadas": {
+            "lat": 40.78,
+            "lon": -7.55
+          }
+        },
+        {
+          "name": "Almeida",
+          "coordenadas": {
+            "lat": 40.72,
+            "lon": -6.9
+          }
+        },
+        {
+          "name": "Celorico da Beira",
+          "coordenadas": {
+            "lat": 40.63,
+            "lon": -7.4
+          }
+        },
+        {
+          "name": "Figueira de Castelo Rodrigo",
+          "coordenadas": {
+            "lat": 41.0,
+            "lon": -6.99
+          }
+        },
+        {
+          "name": "Fornos de Algodres",
+          "coordenadas": {
+            "lat": 40.58,
+            "lon": -7.51
+          }
+        },
+        {
+          "name": "Gouveia",
+          "coordenadas": {
+            "lat": 40.5,
+            "lon": -7.61
+          }
+        },
+        {
+          "name": "Guarda",
+          "coordenadas": {
+            "lat": 40.54,
+            "lon": -7.27
+          }
+        },
+        {
+          "name": "Manteigas",
+          "coordenadas": {
+            "lat": 40.4,
+            "lon": -7.54
+          }
+        },
+        {
+          "name": "Mêda",
+          "coordenadas": {
+            "lat": 40.97,
+            "lon": -7.27
+          }
+        },
+        {
+          "name": "Pinhel",
+          "coordenadas": {
+            "lat": 40.79,
+            "lon": -7.06
+          }
+        },
+        {
+          "name": "Sabugal",
+          "coordenadas": {
+            "lat": 40.35,
+            "lon": -7.09
+          }
+        },
+        {
+          "name": "Seia",
+          "coordenadas": {
+            "lat": 40.42,
+            "lon": -7.7
+          }
+        },
+        {
+          "name": "Trancoso",
+          "coordenadas": {
+            "lat": 40.78,
+            "lon": -7.35
+          }
+        },
+        {
+          "name": "Vila Nova de Foz Côa",
+          "coordenadas": {
+            "lat": 41.09,
+            "lon": -7.13
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha Das Flores",
+      "coordenadas": {
+        "lat": 39.44785845,
+        "lon": -31.1965735
+      },
+      "concelhos": [
+        {
+          "name": "Santa Cruz das Flores",
+          "coordenadas": {
+            "lat": 39.45,
+            "lon": -31.13
+          }
+        },
+        {
+          "name": "Lajes das Flores",
+          "coordenadas": {
+            "lat": 39.37,
+            "lon": -31.17
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha Terceira",
+      "coordenadas": {
+        "lat": 38.72120845,
+        "lon": -27.21032965
+      },
+      "concelhos": [
+        {
+          "name": "Angra do Heroísmo",
+          "coordenadas": {
+            "lat": 38.65,
+            "lon": -27.22
+          }
+        },
+        {
+          "name": "Praia da Vitória",
+          "coordenadas": {
+            "lat": 38.73,
+            "lon": -27.07
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha da Graciosa",
+      "coordenadas": {
+        "lat": 39.05290265,
+        "lon": -28.010182
+      },
+      "concelhos": [
+        {
+          "name": "Santa Cruz da Graciosa",
+          "coordenadas": {
+            "lat": 39.09,
+            "lon": -28.03
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha da Madeira",
+      "coordenadas": {
+        "lat": 31.449703799999998,
+        "lon": -16.559804550000003
+      },
+      "concelhos": [
+        {
+          "name": "Funchal",
+          "coordenadas": {
+            "lat": 32.65,
+            "lon": -16.91
+          }
+        },
+        {
+          "name": "Câmara de Lobos",
+          "coordenadas": {
+            "lat": 32.65,
+            "lon": -17.0
+          }
+        },
+        {
+          "name": "Ribeira Brava",
+          "coordenadas": {
+            "lat": 32.68,
+            "lon": -17.07
+          }
+        },
+        {
+          "name": "Ponta do Sol",
+          "coordenadas": {
+            "lat": 32.68,
+            "lon": -17.1
+          }
+        },
+        {
+          "name": "Calheta",
+          "coordenadas": {
+            "lat": 32.72,
+            "lon": -17.19
+          }
+        },
+        {
+          "name": "Porto Moniz",
+          "coordenadas": {
+            "lat": 32.87,
+            "lon": -17.17
+          }
+        },
+        {
+          "name": "São Vicente",
+          "coordenadas": {
+            "lat": 32.8,
+            "lon": -17.05
+          }
+        },
+        {
+          "name": "Santana",
+          "coordenadas": {
+            "lat": 32.8,
+            "lon": -16.89
+          }
+        },
+        {
+          "name": "Machico",
+          "coordenadas": {
+            "lat": 32.72,
+            "lon": -16.77
+          }
+        },
+        {
+          "name": "Santa Cruz",
+          "coordenadas": {
+            "lat": 32.69,
+            "lon": -16.79
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha de Porto Santo",
+      "coordenadas": {
+        "lat": 33.0621393,
+        "lon": -16.344060650000003
+      },
+      "concelhos": [
+        {
+          "name": "Porto Santo",
+          "coordenadas": {
+            "lat": 33.07,
+            "lon": -16.35
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha de Santa Maria",
+      "coordenadas": {
+        "lat": 36.9726133,
+        "lon": -25.0993699
+      },
+      "concelhos": [
+        {
+          "name": "Vila do Porto",
+          "coordenadas": {
+            "lat": 36.94,
+            "lon": -25.14
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha de São Jorge",
+      "coordenadas": {
+        "lat": 38.645028100000005,
+        "lon": -28.0350516
+      },
+      "concelhos": [
+        {
+          "name": "Velas",
+          "coordenadas": {
+            "lat": 38.68,
+            "lon": -28.2
+          }
+        },
+        {
+          "name": "Calheta",
+          "coordenadas": {
+            "lat": 38.6,
+            "lon": -27.93
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha de São Miguel",
+      "coordenadas": {
+        "lat": 37.807247849999996,
+        "lon": -25.4944941
+      },
+      "concelhos": [
+        {
+          "name": "Ponta Delgada",
+          "coordenadas": {
+            "lat": 37.74,
+            "lon": -25.67
+          }
+        },
+        {
+          "name": "Ribeira Grande",
+          "coordenadas": {
+            "lat": 37.82,
+            "lon": -25.53
+          }
+        },
+        {
+          "name": "Lagoa",
+          "coordenadas": {
+            "lat": 37.75,
+            "lon": -25.58
+          }
+        },
+        {
+          "name": "Vila Franca do Campo",
+          "coordenadas": {
+            "lat": 37.72,
+            "lon": -25.43
+          }
+        },
+        {
+          "name": "Povoação",
+          "coordenadas": {
+            "lat": 37.75,
+            "lon": -25.25
+          }
+        },
+        {
+          "name": "Nordeste",
+          "coordenadas": {
+            "lat": 37.83,
+            "lon": -25.15
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha do Corvo",
+      "coordenadas": {
+        "lat": 39.6977062,
+        "lon": -31.1055015
+      },
+      "concelhos": [
+        {
+          "name": "Corvo",
+          "coordenadas": {
+            "lat": 39.67,
+            "lon": -31.1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha do Faial",
+      "coordenadas": {
+        "lat": 38.579628799999995,
+        "lon": -28.71645265
+      },
+      "concelhos": [
+        {
+          "name": "Horta",
+          "coordenadas": {
+            "lat": 38.53,
+            "lon": -28.63
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ilha do Pico",
+      "coordenadas": {
+        "lat": 38.4717507,
+        "lon": -28.285045500000003
+      },
+      "concelhos": [
+        {
+          "name": "Madalena",
+          "coordenadas": {
+            "lat": 38.53,
+            "lon": -28.53
+          }
+        },
+        {
+          "name": "São Roque do Pico",
+          "coordenadas": {
+            "lat": 38.53,
+            "lon": -28.3
+          }
+        },
+        {
+          "name": "Lajes do Pico",
+          "coordenadas": {
+            "lat": 38.4,
+            "lon": -28.25
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leiria",
+      "coordenadas": {
+        "lat": 39.65065665,
+        "lon": -8.81253345
+      },
+      "concelhos": [
+        {
+          "name": "Alcobaça",
+          "coordenadas": {
+            "lat": 39.55,
+            "lon": -8.98
+          }
+        },
+        {
+          "name": "Alvaiázere",
+          "coordenadas": {
+            "lat": 39.82,
+            "lon": -8.38
+          }
+        },
+        {
+          "name": "Ansião",
+          "coordenadas": {
+            "lat": 39.93,
+            "lon": -8.44
+          }
+        },
+        {
+          "name": "Batalha",
+          "coordenadas": {
+            "lat": 39.66,
+            "lon": -8.83
+          }
+        },
+        {
+          "name": "Bombarral",
+          "coordenadas": {
+            "lat": 39.27,
+            "lon": -9.16
+          }
+        },
+        {
+          "name": "Caldas da Rainha",
+          "coordenadas": {
+            "lat": 39.4,
+            "lon": -9.14
+          }
+        },
+        {
+          "name": "Castanheira de Pêra",
+          "coordenadas": {
+            "lat": 40.0,
+            "lon": -8.21
+          }
+        },
+        {
+          "name": "Figueiró dos Vinhos",
+          "coordenadas": {
+            "lat": 39.9,
+            "lon": -8.28
+          }
+        },
+        {
+          "name": "Leiria",
+          "coordenadas": {
+            "lat": 39.75,
+            "lon": -8.81
+          }
+        },
+        {
+          "name": "Marinha Grande",
+          "coordenadas": {
+            "lat": 39.75,
+            "lon": -8.93
+          }
+        },
+        {
+          "name": "Nazaré",
+          "coordenadas": {
+            "lat": 39.6,
+            "lon": -9.07
+          }
+        },
+        {
+          "name": "Óbidos",
+          "coordenadas": {
+            "lat": 39.36,
+            "lon": -9.16
+          }
+        },
+        {
+          "name": "Pedrógão Grande",
+          "coordenadas": {
+            "lat": 39.92,
+            "lon": -8.15
+          }
+        },
+        {
+          "name": "Peniche",
+          "coordenadas": {
+            "lat": 39.36,
+            "lon": -9.38
+          }
+        },
+        {
+          "name": "Pombal",
+          "coordenadas": {
+            "lat": 39.92,
+            "lon": -8.63
+          }
+        },
+        {
+          "name": "Porto de Mós",
+          "coordenadas": {
+            "lat": 39.6,
+            "lon": -8.82
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lisboa",
+      "coordenadas": {
+        "lat": 38.995437800000005,
+        "lon": -9.1411938
+      },
+      "concelhos": [
+        {
+          "name": "Alenquer",
+          "coordenadas": {
+            "lat": 39.06,
+            "lon": -9.01
+          }
+        },
+        {
+          "name": "Amadora",
+          "coordenadas": {
+            "lat": 38.75,
+            "lon": -9.23
+          }
+        },
+        {
+          "name": "Arruda dos Vinhos",
+          "coordenadas": {
+            "lat": 39.0,
+            "lon": -9.08
+          }
+        },
+        {
+          "name": "Azambuja",
+          "coordenadas": {
+            "lat": 39.07,
+            "lon": -8.87
+          }
+        },
+        {
+          "name": "Cadaval",
+          "coordenadas": {
+            "lat": 39.24,
+            "lon": -9.1
+          }
+        },
+        {
+          "name": "Cascais",
+          "coordenadas": {
+            "lat": 38.7,
+            "lon": -9.42
+          }
+        },
+        {
+          "name": "Lisboa",
+          "coordenadas": {
+            "lat": 38.72,
+            "lon": -9.14
+          }
+        },
+        {
+          "name": "Loures",
+          "coordenadas": {
+            "lat": 38.83,
+            "lon": -9.17
+          }
+        },
+        {
+          "name": "Lourinhã",
+          "coordenadas": {
+            "lat": 39.24,
+            "lon": -9.31
+          }
+        },
+        {
+          "name": "Mafra",
+          "coordenadas": {
+            "lat": 38.94,
+            "lon": -9.33
+          }
+        },
+        {
+          "name": "Odivelas",
+          "coordenadas": {
+            "lat": 38.79,
+            "lon": -9.18
+          }
+        },
+        {
+          "name": "Oeiras",
+          "coordenadas": {
+            "lat": 38.7,
+            "lon": -9.31
+          }
+        },
+        {
+          "name": "Sintra",
+          "coordenadas": {
+            "lat": 38.8,
+            "lon": -9.38
+          }
+        },
+        {
+          "name": "Sobral de Monte Agraço",
+          "coordenadas": {
+            "lat": 39.02,
+            "lon": -9.15
+          }
+        },
+        {
+          "name": "Torres Vedras",
+          "coordenadas": {
+            "lat": 39.09,
+            "lon": -9.26
+          }
+        },
+        {
+          "name": "Vila Franca de Xira",
+          "coordenadas": {
+            "lat": 38.95,
+            "lon": -8.99
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portalegre",
+      "coordenadas": {
+        "lat": 39.20758845,
+        "lon": -7.6475001
+      },
+      "concelhos": [
+        {
+          "name": "Alter do Chão",
+          "coordenadas": {
+            "lat": 39.2,
+            "lon": -7.66
+          }
+        },
+        {
+          "name": "Arronches",
+          "coordenadas": {
+            "lat": 39.12,
+            "lon": -7.29
+          }
+        },
+        {
+          "name": "Avis",
+          "coordenadas": {
+            "lat": 39.06,
+            "lon": -7.89
+          }
+        },
+        {
+          "name": "Campo Maior",
+          "coordenadas": {
+            "lat": 39.02,
+            "lon": -7.07
+          }
+        },
+        {
+          "name": "Castelo de Vide",
+          "coordenadas": {
+            "lat": 39.42,
+            "lon": -7.45
+          }
+        },
+        {
+          "name": "Crato",
+          "coordenadas": {
+            "lat": 39.29,
+            "lon": -7.65
+          }
+        },
+        {
+          "name": "Elvas",
+          "coordenadas": {
+            "lat": 38.88,
+            "lon": -7.16
+          }
+        },
+        {
+          "name": "Fronteira",
+          "coordenadas": {
+            "lat": 39.06,
+            "lon": -7.63
+          }
+        },
+        {
+          "name": "Gavião",
+          "coordenadas": {
+            "lat": 39.46,
+            "lon": -7.93
+          }
+        },
+        {
+          "name": "Marvão",
+          "coordenadas": {
+            "lat": 39.4,
+            "lon": -7.38
+          }
+        },
+        {
+          "name": "Monforte",
+          "coordenadas": {
+            "lat": 39.05,
+            "lon": -7.44
+          }
+        },
+        {
+          "name": "Nisa",
+          "coordenadas": {
+            "lat": 39.52,
+            "lon": -7.65
+          }
+        },
+        {
+          "name": "Ponte de Sor",
+          "coordenadas": {
+            "lat": 39.25,
+            "lon": -8.01
+          }
+        },
+        {
+          "name": "Portalegre",
+          "coordenadas": {
+            "lat": 39.29,
+            "lon": -7.43
+          }
+        },
+        {
+          "name": "Sousel",
+          "coordenadas": {
+            "lat": 38.96,
+            "lon": -7.68
+          }
+        }
+      ]
+    },
+    {
+      "name": "Porto",
+      "coordenadas": {
+        "lat": 41.23667575,
+        "lon": -8.332321
+      },
+      "concelhos": [
+        {
+          "name": "Amarante",
+          "coordenadas": {
+            "lat": 41.27,
+            "lon": -8.08
+          }
+        },
+        {
+          "name": "Baião",
+          "coordenadas": {
+            "lat": 41.16,
+            "lon": -8.03
+          }
+        },
+        {
+          "name": "Felgueiras",
+          "coordenadas": {
+            "lat": 41.37,
+            "lon": -8.2
+          }
+        },
+        {
+          "name": "Gondomar",
+          "coordenadas": {
+            "lat": 41.14,
+            "lon": -8.53
+          }
+        },
+        {
+          "name": "Lousada",
+          "coordenadas": {
+            "lat": 41.28,
+            "lon": -8.28
+          }
+        },
+        {
+          "name": "Maia",
+          "coordenadas": {
+            "lat": 41.24,
+            "lon": -8.62
+          }
+        },
+        {
+          "name": "Marco de Canaveses",
+          "coordenadas": {
+            "lat": 41.19,
+            "lon": -8.16
+          }
+        },
+        {
+          "name": "Matosinhos",
+          "coordenadas": {
+            "lat": 41.18,
+            "lon": -8.69
+          }
+        },
+        {
+          "name": "Paços de Ferreira",
+          "coordenadas": {
+            "lat": 41.28,
+            "lon": -8.38
+          }
+        },
+        {
+          "name": "Paredes",
+          "coordenadas": {
+            "lat": 41.21,
+            "lon": -8.33
+          }
+        },
+        {
+          "name": "Penafiel",
+          "coordenadas": {
+            "lat": 41.2,
+            "lon": -8.28
+          }
+        },
+        {
+          "name": "Porto",
+          "coordenadas": {
+            "lat": 41.15,
+            "lon": -8.61
+          }
+        },
+        {
+          "name": "Póvoa de Varzim",
+          "coordenadas": {
+            "lat": 41.38,
+            "lon": -8.76
+          }
+        },
+        {
+          "name": "Santo Tirso",
+          "coordenadas": {
+            "lat": 41.34,
+            "lon": -8.48
+          }
+        },
+        {
+          "name": "Trofa",
+          "coordenadas": {
+            "lat": 41.33,
+            "lon": -8.55
+          }
+        },
+        {
+          "name": "Valongo",
+          "coordenadas": {
+            "lat": 41.19,
+            "lon": -8.5
+          }
+        },
+        {
+          "name": "Vila do Conde",
+          "coordenadas": {
+            "lat": 41.35,
+            "lon": -8.74
+          }
+        },
+        {
+          "name": "Vila Nova de Gaia",
+          "coordenadas": {
+            "lat": 41.13,
+            "lon": -8.61
+          }
+        }
+      ]
+    },
+    {
+      "name": "Santarém",
+      "coordenadas": {
+        "lat": 39.2851098,
+        "lon": -8.405282
+      },
+      "concelhos": [
+        {
+          "name": "Abrantes",
+          "coordenadas": {
+            "lat": 39.46,
+            "lon": -8.2
+          }
+        },
+        {
+          "name": "Alcanena",
+          "coordenadas": {
+            "lat": 39.46,
+            "lon": -8.67
+          }
+        },
+        {
+          "name": "Almeirim",
+          "coordenadas": {
+            "lat": 39.21,
+            "lon": -8.62
+          }
+        },
+        {
+          "name": "Alpiarça",
+          "coordenadas": {
+            "lat": 39.25,
+            "lon": -8.58
+          }
+        },
+        {
+          "name": "Benavente",
+          "coordenadas": {
+            "lat": 38.98,
+            "lon": -8.81
+          }
+        },
+        {
+          "name": "Cartaxo",
+          "coordenadas": {
+            "lat": 39.15,
+            "lon": -8.79
+          }
+        },
+        {
+          "name": "Chamusca",
+          "coordenadas": {
+            "lat": 39.35,
+            "lon": -8.48
+          }
+        },
+        {
+          "name": "Constância",
+          "coordenadas": {
+            "lat": 39.47,
+            "lon": -8.32
+          }
+        },
+        {
+          "name": "Coruche",
+          "coordenadas": {
+            "lat": 38.96,
+            "lon": -8.53
+          }
+        },
+        {
+          "name": "Entroncamento",
+          "coordenadas": {
+            "lat": 39.47,
+            "lon": -8.47
+          }
+        },
+        {
+          "name": "Ferreira do Zêzere",
+          "coordenadas": {
+            "lat": 39.71,
+            "lon": -8.3
+          }
+        },
+        {
+          "name": "Golegã",
+          "coordenadas": {
+            "lat": 39.4,
+            "lon": -8.49
+          }
+        },
+        {
+          "name": "Mação",
+          "coordenadas": {
+            "lat": 39.55,
+            "lon": -7.99
+          }
+        },
+        {
+          "name": "Ourém",
+          "coordenadas": {
+            "lat": 39.65,
+            "lon": -8.58
+          }
+        },
+        {
+          "name": "Rio Maior",
+          "coordenadas": {
+            "lat": 39.34,
+            "lon": -8.94
+          }
+        },
+        {
+          "name": "Salvaterra de Magos",
+          "coordenadas": {
+            "lat": 39.03,
+            "lon": -8.79
+          }
+        },
+        {
+          "name": "Santarém",
+          "coordenadas": {
+            "lat": 39.24,
+            "lon": -8.68
+          }
+        },
+        {
+          "name": "Sardoal",
+          "coordenadas": {
+            "lat": 39.56,
+            "lon": -8.16
+          }
+        },
+        {
+          "name": "Tomar",
+          "coordenadas": {
+            "lat": 39.6,
+            "lon": -8.42
+          }
+        },
+        {
+          "name": "Torres Novas",
+          "coordenadas": {
+            "lat": 39.48,
+            "lon": -8.54
+          }
+        },
+        {
+          "name": "Vila Nova da Barquinha",
+          "coordenadas": {
+            "lat": 39.46,
+            "lon": -8.42
+          }
+        }
+      ]
+    },
+    {
+      "name": "Setúbal",
+      "coordenadas": {
+        "lat": 38.2974082,
+        "lon": -8.6963358
+      },
+      "concelhos": [
+        {
+          "name": "Alcácer do Sal",
+          "coordenadas": {
+            "lat": 38.37,
+            "lon": -8.51
+          }
+        },
+        {
+          "name": "Alcochete",
+          "coordenadas": {
+            "lat": 38.75,
+            "lon": -8.96
+          }
+        },
+        {
+          "name": "Almada",
+          "coordenadas": {
+            "lat": 38.68,
+            "lon": -9.16
+          }
+        },
+        {
+          "name": "Barreiro",
+          "coordenadas": {
+            "lat": 38.66,
+            "lon": -9.07
+          }
+        },
+        {
+          "name": "Grândola",
+          "coordenadas": {
+            "lat": 38.17,
+            "lon": -8.57
+          }
+        },
+        {
+          "name": "Moita",
+          "coordenadas": {
+            "lat": 38.66,
+            "lon": -8.99
+          }
+        },
+        {
+          "name": "Montijo",
+          "coordenadas": {
+            "lat": 38.71,
+            "lon": -8.97
+          }
+        },
+        {
+          "name": "Palmela",
+          "coordenadas": {
+            "lat": 38.57,
+            "lon": -8.9
+          }
+        },
+        {
+          "name": "Santiago do Cacém",
+          "coordenadas": {
+            "lat": 38.02,
+            "lon": -8.7
+          }
+        },
+        {
+          "name": "Seixal",
+          "coordenadas": {
+            "lat": 38.64,
+            "lon": -9.1
+          }
+        },
+        {
+          "name": "Sesimbra",
+          "coordenadas": {
+            "lat": 38.44,
+            "lon": -9.1
+          }
+        },
+        {
+          "name": "Setúbal",
+          "coordenadas": {
+            "lat": 38.52,
+            "lon": -8.89
+          }
+        },
+        {
+          "name": "Sines",
+          "coordenadas": {
+            "lat": 37.96,
+            "lon": -8.87
+          }
+        }
+      ]
+    },
+    {
+      "name": "Viana do Castelo",
+      "coordenadas": {
+        "lat": 41.8803459,
+        "lon": -8.48191175
+      },
+      "concelhos": [
+        {
+          "name": "Arcos de Valdevez",
+          "coordenadas": {
+            "lat": 41.85,
+            "lon": -8.42
+          }
+        },
+        {
+          "name": "Caminha",
+          "coordenadas": {
+            "lat": 41.87,
+            "lon": -8.84
+          }
+        },
+        {
+          "name": "Melgaço",
+          "coordenadas": {
+            "lat": 42.11,
+            "lon": -8.26
+          }
+        },
+        {
+          "name": "Monção",
+          "coordenadas": {
+            "lat": 42.08,
+            "lon": -8.48
+          }
+        },
+        {
+          "name": "Paredes de Coura",
+          "coordenadas": {
+            "lat": 41.91,
+            "lon": -8.56
+          }
+        },
+        {
+          "name": "Ponte da Barca",
+          "coordenadas": {
+            "lat": 41.81,
+            "lon": -8.42
+          }
+        },
+        {
+          "name": "Ponte de Lima",
+          "coordenadas": {
+            "lat": 41.77,
+            "lon": -8.58
+          }
+        },
+        {
+          "name": "Valença",
+          "coordenadas": {
+            "lat": 42.03,
+            "lon": -8.64
+          }
+        },
+        {
+          "name": "Viana do Castelo",
+          "coordenadas": {
+            "lat": 41.69,
+            "lon": -8.83
+          }
+        },
+        {
+          "name": "Vila Nova de Cerveira",
+          "coordenadas": {
+            "lat": 41.94,
+            "lon": -8.74
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vila Real",
+      "coordenadas": {
+        "lat": 41.522911300000004,
+        "lon": -7.64505265
+      },
+      "concelhos": [
+        {
+          "name": "Alijó",
+          "coordenadas": {
+            "lat": 41.28,
+            "lon": -7.47
+          }
+        },
+        {
+          "name": "Boticas",
+          "coordenadas": {
+            "lat": 41.68,
+            "lon": -7.67
+          }
+        },
+        {
+          "name": "Chaves",
+          "coordenadas": {
+            "lat": 41.74,
+            "lon": -7.47
+          }
+        },
+        {
+          "name": "Mesão Frio",
+          "coordenadas": {
+            "lat": 41.16,
+            "lon": -7.88
+          }
+        },
+        {
+          "name": "Mondim de Basto",
+          "coordenadas": {
+            "lat": 41.42,
+            "lon": -7.95
+          }
+        },
+        {
+          "name": "Montalegre",
+          "coordenadas": {
+            "lat": 41.83,
+            "lon": -7.79
+          }
+        },
+        {
+          "name": "Murça",
+          "coordenadas": {
+            "lat": 41.4,
+            "lon": -7.45
+          }
+        },
+        {
+          "name": "Peso da Régua",
+          "coordenadas": {
+            "lat": 41.16,
+            "lon": -7.79
+          }
+        },
+        {
+          "name": "Ribeira de Pena",
+          "coordenadas": {
+            "lat": 41.51,
+            "lon": -7.8
+          }
+        },
+        {
+          "name": "Sabrosa",
+          "coordenadas": {
+            "lat": 41.26,
+            "lon": -7.58
+          }
+        },
+        {
+          "name": "Santa Marta de Penaguião",
+          "coordenadas": {
+            "lat": 41.22,
+            "lon": -7.79
+          }
+        },
+        {
+          "name": "Valpaços",
+          "coordenadas": {
+            "lat": 41.6,
+            "lon": -7.31
+          }
+        },
+        {
+          "name": "Vila Pouca de Aguiar",
+          "coordenadas": {
+            "lat": 41.51,
+            "lon": -7.64
+          }
+        },
+        {
+          "name": "Vila Real",
+          "coordenadas": {
+            "lat": 41.3,
+            "lon": -7.74
+          }
+        }
+      ]
+    },
+    {
+      "name": "Viseu",
+      "coordenadas": {
+        "lat": 40.768648,
+        "lon": -7.83201025
+      },
+      "concelhos": [
+        {
+          "name": "Armamar",
+          "coordenadas": {
+            "lat": 41.1,
+            "lon": -7.69
+          }
+        },
+        {
+          "name": "Carregal do Sal",
+          "coordenadas": {
+            "lat": 40.44,
+            "lon": -8.04
+          }
+        },
+        {
+          "name": "Castro Daire",
+          "coordenadas": {
+            "lat": 40.9,
+            "lon": -8.0
+          }
+        },
+        {
+          "name": "Cinfães",
+          "coordenadas": {
+            "lat": 41.07,
+            "lon": -8.11
+          }
+        },
+        {
+          "name": "Lamego",
+          "coordenadas": {
+            "lat": 41.1,
+            "lon": -7.81
+          }
+        },
+        {
+          "name": "Mangualde",
+          "coordenadas": {
+            "lat": 40.6,
+            "lon": -7.76
+          }
+        },
+        {
+          "name": "Moimenta da Beira",
+          "coordenadas": {
+            "lat": 40.98,
+            "lon": -7.62
+          }
+        },
+        {
+          "name": "Mortágua",
+          "coordenadas": {
+            "lat": 40.39,
+            "lon": -8.24
+          }
+        },
+        {
+          "name": "Nelas",
+          "coordenadas": {
+            "lat": 40.53,
+            "lon": -7.85
+          }
+        },
+        {
+          "name": "Oliveira de Frades",
+          "coordenadas": {
+            "lat": 40.73,
+            "lon": -8.16
+          }
+        },
+        {
+          "name": "Penalva do Castelo",
+          "coordenadas": {
+            "lat": 40.66,
+            "lon": -7.67
+          }
+        },
+        {
+          "name": "Penedono",
+          "coordenadas": {
+            "lat": 40.98,
+            "lon": -7.39
+          }
+        },
+        {
+          "name": "Resende",
+          "coordenadas": {
+            "lat": 41.1,
+            "lon": -7.96
+          }
+        },
+        {
+          "name": "Santa Comba Dão",
+          "coordenadas": {
+            "lat": 40.4,
+            "lon": -8.13
+          }
+        },
+        {
+          "name": "São João da Pesqueira",
+          "coordenadas": {
+            "lat": 41.15,
+            "lon": -7.4
+          }
+        },
+        {
+          "name": "São Pedro do Sul",
+          "coordenadas": {
+            "lat": 40.75,
+            "lon": -8.07
+          }
+        },
+        {
+          "name": "Sátão",
+          "coordenadas": {
+            "lat": 40.74,
+            "lon": -7.73
+          }
+        },
+        {
+          "name": "Sernancelhe",
+          "coordenadas": {
+            "lat": 40.87,
+            "lon": -7.5
+          }
+        },
+        {
+          "name": "Tabuaço",
+          "coordenadas": {
+            "lat": 41.12,
+            "lon": -7.57
+          }
+        },
+        {
+          "name": "Tarouca",
+          "coordenadas": {
+            "lat": 41.02,
+            "lon": -7.75
+          }
+        },
+        {
+          "name": "Tondela",
+          "coordenadas": {
+            "lat": 40.52,
+            "lon": -8.08
+          }
+        },
+        {
+          "name": "Vila Nova de Paiva",
+          "coordenadas": {
+            "lat": 40.85,
+            "lon": -7.73
+          }
+        },
+        {
+          "name": "Viseu",
+          "coordenadas": {
+            "lat": 40.66,
+            "lon": -7.91
+          }
+        },
+        {
+          "name": "Vouzela",
+          "coordenadas": {
+            "lat": 40.72,
+            "lon": -8.12
+          }
+        }
+      ]
+    },
+    {
+      "name": "Évora",
+      "coordenadas": {
+        "lat": 38.59079075,
+        "lon": -7.882622
+      },
+      "concelhos": [
+        {
+          "name": "Alandroal",
+          "coordenadas": {
+            "lat": 38.7,
+            "lon": -7.4
+          }
+        },
+        {
+          "name": "Arraiolos",
+          "coordenadas": {
+            "lat": 38.72,
+            "lon": -7.98
+          }
+        },
+        {
+          "name": "Borba",
+          "coordenadas": {
+            "lat": 38.81,
+            "lon": -7.45
+          }
+        },
+        {
+          "name": "Estremoz",
+          "coordenadas": {
+            "lat": 38.85,
+            "lon": -7.59
+          }
+        },
+        {
+          "name": "Évora",
+          "coordenadas": {
+            "lat": 38.57,
+            "lon": -7.91
+          }
+        },
+        {
+          "name": "Montemor-o-Novo",
+          "coordenadas": {
+            "lat": 38.65,
+            "lon": -8.22
+          }
+        },
+        {
+          "name": "Mora",
+          "coordenadas": {
+            "lat": 38.95,
+            "lon": -8.17
+          }
+        },
+        {
+          "name": "Mourão",
+          "coordenadas": {
+            "lat": 38.38,
+            "lon": -7.35
+          }
+        },
+        {
+          "name": "Portel",
+          "coordenadas": {
+            "lat": 38.31,
+            "lon": -7.7
+          }
+        },
+        {
+          "name": "Redondo",
+          "coordenadas": {
+            "lat": 38.65,
+            "lon": -7.55
+          }
+        },
+        {
+          "name": "Reguengos de Monsaraz",
+          "coordenadas": {
+            "lat": 38.42,
+            "lon": -7.53
+          }
+        },
+        {
+          "name": "Vendas Novas",
+          "coordenadas": {
+            "lat": 38.68,
+            "lon": -8.46
+          }
+        },
+        {
+          "name": "Viana do Alentejo",
+          "coordenadas": {
+            "lat": 38.33,
+            "lon": -8.0
+          }
+        },
+        {
+          "name": "Vila Viçosa",
+          "coordenadas": {
+            "lat": 38.78,
+            "lon": -7.42
+          }
+        }
+      ]
+    }
+  ]
+}
