@@ -20,7 +20,7 @@ const props = defineProps({
 const formattedPrice = computed(() => {
   if (props.book.price == null) return '—'
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(
-    props.book.price
+    props.book.price,
   )
 })
 </script>

@@ -6,6 +6,9 @@ export const booksService = {
     return api.get('/books/search', { params })
   },
 
+  getById(bookId) {
+    return api.get(`/books/${bookId}`)
+  },
 
   getPriceHistory(bookId) {
     return api.get(`/books/${bookId}/price-history`)
