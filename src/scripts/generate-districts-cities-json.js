@@ -4,7 +4,7 @@ import path from 'path'
 const BASE = 'https://json.geoapi.pt'
 const REQUEST_DELAY_MS = 1500
 const MAX_RETRIES = 6
-const OUT_PATH = path.resolve('src/data/geo-fallback.json')
+const OUT_PATH = path.resolve('src/data/districts_cities.json')
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
