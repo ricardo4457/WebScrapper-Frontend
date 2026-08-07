@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { booksService } from '@/services/books.service.js'
+import { useScrapeAwareFetch } from '@/composables/useScrapeAwareFetch.js'
 
 export const useBooksStore = defineStore('books', () => {
   const items = ref([])
@@ -24,6 +25,45 @@ export const useBooksStore = defineStore('books', () => {
     } finally {
       loading.value = false
     }
+  }
+
+  // School search (final Search Wizard step). discipline only filters cached
+  // books and is never used by the scraping fallback.
+  // Repeat the original search after the scrape finishes.
+
+  const searchFetch = useScrapeAwareFetch()
+
+  async function searchBySchool({
+    school,
+    district,
+    city,
+    year,
+    teachingCycle,
+    course,
+    discipline,
+  }) {
+    items.value = []
+
+    const params = {
+      school,
+      district,
+      city,
+      year,
+      teaching_cycle: teachingCycle,
+      ...(course ? { course } : {}),
+      ...(discipline ? { discipline } : {}),
+    }
+
+    await searchFetch.run(() => booksService.search(params), {
+      onResult: (data) => {
+        items.value = data.books?.data ?? data.books ?? []
+      },
+      onPollDone: async () => {
+        // Depois do scrape terminar, repete a pesquisa original.
+        const response = await booksService.search(params)
+        items.value = response.data.books?.data ?? response.data.books ?? []
+      },
+    })
   }
 
   async function fetchBookById(id) {
@@ -54,11 +94,20 @@ export const useBooksStore = defineStore('books', () => {
     items,
     loading,
     error,
+
+    searchLoading: searchFetch.loading,
+    searchScraping: searchFetch.scraping,
+    searchError: searchFetch.error,
+    searchPollingStatus: searchFetch.pollingStatus,
+    searchRunId: searchFetch.runId,
+
     currentBook,
     currentBookSchools,
     detailLoading,
     detailError,
+
     searchByTitle,
+    searchBySchool,
     fetchBookById,
     reset,
   }
