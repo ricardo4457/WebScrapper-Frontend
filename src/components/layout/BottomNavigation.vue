@@ -16,8 +16,6 @@ const route = useRoute()
 const navItems = [
   { title: 'Início', to: '/', icon: 'mdi-home' },
   { title: 'Pesquisar', to: '/search', icon: 'mdi-magnify' },
-  { title: 'Livros', to: '/books', icon: 'mdi-book-open-variant' },
-  { title: 'Escolas', to: '/schools', icon: 'mdi-school' },
 ]
 
 const active = computed(() => route.path)

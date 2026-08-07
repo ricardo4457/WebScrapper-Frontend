@@ -12,20 +12,10 @@ const routes = [
     component: () => import('@/views/SearchView.vue'),
   },
   {
-    path: '/books',
-    name: 'books',
-    component: () => import('@/views/books/BooksView.vue'),
-  },
-  {
     path: '/books/:id',
     name: 'book-detail',
     component: () => import('@/views/books/BooksDetailView.vue'),
     props: true,
-  },
-  {
-    path: '/schools',
-    name: 'schools',
-    component: () => import('@/views/SchoolsView.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
