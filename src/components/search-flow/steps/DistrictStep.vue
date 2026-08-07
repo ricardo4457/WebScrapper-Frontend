@@ -29,7 +29,7 @@ function load() {
 function onSelect(district) {
   if (!district) return
   searchStore.setSelection('district', district)
-  // Reset de seleções dependentes, caso o utilizador volte atrás e mude o distrito
+  // Reset 
   searchStore.setSelection('city', null)
   searchStore.setSelection('school', null)
   searchStore.nextStep()
