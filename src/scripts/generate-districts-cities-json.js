@@ -69,9 +69,12 @@ async function main() {
     .sort((a, b) => a[0].localeCompare(b[0], 'pt'))
     .map(([name, municipios]) => ({
       name,
-      concelhos: [...municipios].sort((a, b) => a.localeCompare(b, 'pt')).map((m) => ({ name: m })),
+      concelhos: [...municipios]
+        .map(resolveName)
+        .filter(Boolean)
+        .sort((a, b) => String(a).localeCompare(String(b), 'pt'))
+        .map((m) => ({ name: m })),
     }))
-
   await fs.mkdir(path.dirname(OUT_PATH), { recursive: true })
 
   await fs.writeFile(OUT_PATH, JSON.stringify({ distritos }, null, 2), 'utf-8')
