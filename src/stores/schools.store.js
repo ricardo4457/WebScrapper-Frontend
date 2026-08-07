@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import teachingCycles from '@/data/teaching-cycles.json'
+import districtsCities from '@/data/districts-cities.json'
 import {
   getTeachingTypesByYear,
   shouldShowTeachingTypeStep,
 } from '@/data/helpers/teachingCycles.js'
-import { locationsService } from '@/services/locations.service.js'
 import { schoolsService } from '@/services/schools.service.js'
 import { useScrapeAwareFetch } from '@/composables/useScrapeAwareFetch.js'
 
@@ -25,33 +25,34 @@ export const useSchoolsStore = defineStore('schools', () => {
   const citiesLoading = ref(false)
   const citiesError = ref(null)
 
-  // Districts and cities come from /locations (already scraped data),
-  // not from GeoAPI.pt or a static JSON file.
-  async function fetchDistricts() {
+  // Districts and cities come from a static local JSON (districts-cities.json,
+  // gerado via src/scripts/generate-districts-cities-json.js), não da API —
+  // decisão revertida: /locations do backend só devolve zonas já scraped, o
+  // que impediria o wizard de oferecer distritos/concelhos ainda sem dados.
+  function fetchDistricts() {
     districtsLoading.value = true
     districtsError.value = null
 
     try {
-      const response = await locationsService.getLocations()
-      districts.value = response.data.districts ?? []
+      districts.value = districtsCities.distritos.map((d) => d.name)
     } catch (err) {
-      districtsError.value = err.response?.data?.message ?? 'Não foi possível obter os distritos.'
+      districtsError.value = 'Não foi possível obter os distritos.'
       districts.value = []
     } finally {
       districtsLoading.value = false
     }
   }
 
-  async function fetchCitiesByDistrict(district) {
+  function fetchCitiesByDistrict(district) {
     citiesLoading.value = true
     citiesError.value = null
     cities.value = []
 
     try {
-      const response = await locationsService.getLocations({ district })
-      cities.value = response.data.cities ?? []
+      const entry = districtsCities.distritos.find((d) => d.name === district)
+      cities.value = entry?.concelhos.map((c) => c.name) ?? []
     } catch (err) {
-      citiesError.value = err.response?.data?.message ?? 'Não foi possível obter os concelhos.'
+      citiesError.value = 'Não foi possível obter os concelhos.'
       cities.value = []
     } finally {
       citiesLoading.value = false
@@ -64,6 +65,40 @@ export const useSchoolsStore = defineStore('schools', () => {
 
   function needsTeachingTypeStep(ano) {
     return shouldShowTeachingTypeStep(ano)
+  }
+
+  // Schools for the SchoolStep. Same discover=1 pattern: try cache first,
+  // fall back to a full_city scrape only if nothing is found and we have
+  // enough info (district + city) to dispatch it.
+  const schoolsFetch = useScrapeAwareFetch()
+
+  async function fetchSchools({ district, city, search } = {}) {
+    schools.value = []
+
+    const baseParams = {
+      ...(district ? { district } : {}),
+      ...(city ? { city } : {}),
+      ...(search ? { search } : {}),
+    }
+
+    const data = await schoolsFetch.run(() => schoolsService.list(baseParams), {
+      onResult: (data) => {
+        schools.value = Array.isArray(data) ? data : []
+      },
+    })
+
+    if (Array.isArray(data) && data.length) return
+    if (!district || !city) return
+
+    await schoolsFetch.run(() => schoolsService.list({ ...baseParams, discover: 1 }), {
+      onResult: (data) => {
+        schools.value = Array.isArray(data) ? data : []
+      },
+      onPollDone: async () => {
+        const response = await schoolsService.list(baseParams)
+        schools.value = Array.isArray(response.data) ? response.data : []
+      },
+    })
   }
 
   // Courses are read-only by default. If none are cached, retry with
@@ -155,6 +190,11 @@ export const useSchoolsStore = defineStore('schools', () => {
     schools,
     loading,
     error,
+    schoolsLoading: schoolsFetch.loading,
+    schoolsScraping: schoolsFetch.scraping,
+    schoolsError: schoolsFetch.error,
+    schoolsPollingStatus: schoolsFetch.pollingStatus,
+    fetchSchools,
 
     cycles,
 
