@@ -19,14 +19,15 @@ export function useScrapeAwareFetch() {
   const error = ref(null)
   const runId = ref(null)
   const jobsTotal = ref(null)
+  const retryAfter = ref(null)
 
   const polling = usePolling()
-
 
   async function run(requestFn, { onResult, onPollUpdate, onPollDone } = {}) {
     loading.value = true
     scraping.value = false
     error.value = null
+    retryAfter.value = null
 
     try {
       const response = await requestFn()
@@ -50,7 +51,17 @@ export function useScrapeAwareFetch() {
       onResult?.(response.data)
       return response.data
     } catch (err) {
-      error.value = err.response?.data?.message ?? 'Ocorreu um erro.'
+      if (err.response?.status === 429) {
+        // Laravel's throttle middleware returns the header Retry-After.
+        const seconds = Number(err.response.headers?.['retry-after'])
+        retryAfter.value = Number.isFinite(seconds) && seconds > 0 ? seconds : null
+
+        error.value = retryAfter.value
+          ? `Demasiados pedidos. Tenta novamente daqui a ${retryAfter.value} segundos.`
+          : 'Demasiados pedidos. Tenta novamente dentro de momentos.'
+      } else {
+        error.value = err.response?.data?.message ?? 'Ocorreu um erro.'
+      }
       throw err
     } finally {
       loading.value = false
@@ -63,6 +74,7 @@ export function useScrapeAwareFetch() {
     error,
     runId,
     jobsTotal,
+    retryAfter,
     pollingStatus: polling.status,
     pollingError: polling.error,
     pollingTimedOut: polling.timedOut,
