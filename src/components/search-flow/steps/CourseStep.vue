@@ -1,6 +1,17 @@
 <template>
   <WizardStep title="Curso" @back="searchStore.previousStep()">
-    <ErrorState v-if="schoolsStore.coursesError" :message="schoolsStore.coursesError" @retry="load" />
+    <ErrorState
+      v-if="schoolsStore.coursesError"
+      :message="schoolsStore.coursesError"
+      @retry="load"
+    />
+
+    <v-progress-circular
+      v-else-if="schoolsStore.coursesLoading"
+      indeterminate
+      class="d-flex mx-auto my-6"
+    />
+
     <v-list v-else lines="one">
       <v-list-item
         v-for="course in schoolsStore.courses"
@@ -13,6 +24,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import WizardStep from '../WizardStep.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
 import { useSchoolsStore } from '@/stores/schools.store.js'
@@ -21,14 +33,18 @@ import { useSearchStore } from '@/stores/search.store.js'
 const schoolsStore = useSchoolsStore()
 const searchStore = useSearchStore()
 
-// Este passo só é injetado no wizard quando schoolsStore.courses já tem
-// dados (ver TeachingCycleStep.vue) — não precisa de fetch próprio aqui.
-function load() {
-  schoolsStore.fetchCourses(searchStore.selections.school.id, {
+async function load() {
+  const school = searchStore.selections.school
+
+  if (!school?.id) return
+
+  await schoolsStore.fetchCourses(school.id, {
     year: searchStore.selections.year,
     teachingCycle: searchStore.selections.teachingCycle,
   })
 }
+
+onMounted(load)
 
 function onSelect(course) {
   searchStore.setSelection('course', course)
