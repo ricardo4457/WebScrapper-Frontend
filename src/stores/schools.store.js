@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import teachingCycles from '@/data/teaching-cycles.json'
 import districtsCities from '@/data/districts-cities.json'
 import {
+  getYears,
   getTeachingTypesByYear,
   shouldShowTeachingTypeStep,
 } from '@/data/helpers/teachingCycles.js'
@@ -16,6 +17,7 @@ export const useSchoolsStore = defineStore('schools', () => {
 
   // Teaching cycles are static (JSON), not fetched from the backend.
   const cycles = ref(teachingCycles)
+  const years = ref(getYears())
 
   const districts = ref([])
   const districtsLoading = ref(false)
@@ -71,32 +73,43 @@ export const useSchoolsStore = defineStore('schools', () => {
   // fall back to a full_city scrape only if nothing is found and we have
   // enough info (district + city) to dispatch it.
   const schoolsFetch = useScrapeAwareFetch()
+  let schoolsRequestKey = null
 
-  async function fetchSchools({ district, city, search } = {}) {
+  async function fetchSchools({ district, city, search, year, teachingCycle } = {}) {
+    const key = JSON.stringify({ district, city, search })
+
+    // Já há um pedido/scrape em curso para a mesma escola/zona não repetir.
+    if (schoolsRequestKey === key && (schoolsFetch.loading.value || schoolsFetch.scraping.value)) {
+      return
+    }
+    schoolsRequestKey = key
+
     schools.value = []
 
     const baseParams = {
       ...(district ? { district } : {}),
       ...(city ? { city } : {}),
       ...(search ? { search } : {}),
+      ...(year ? { year } : {}),
+      ...(teachingCycle ? { teaching_cycle: teachingCycle } : {}),
     }
 
     const data = await schoolsFetch.run(() => schoolsService.list(baseParams), {
       onResult: (data) => {
-        schools.value = Array.isArray(data) ? data : []
+        schools.value = data.schools ?? []
       },
     })
 
-    if (Array.isArray(data) && data.length) return
-    if (!district || !city) return
+    if (data?.schools?.length) return
+    if (!district || !city || !year || !teachingCycle) return
 
     await schoolsFetch.run(() => schoolsService.list({ ...baseParams, discover: 1 }), {
       onResult: (data) => {
-        schools.value = Array.isArray(data) ? data : []
+        schools.value = data.schools ?? []
       },
       onPollDone: async () => {
         const response = await schoolsService.list(baseParams)
-        schools.value = Array.isArray(response.data) ? response.data : []
+        schools.value = response.data.schools ?? []
       },
     })
   }
@@ -105,8 +118,16 @@ export const useSchoolsStore = defineStore('schools', () => {
   // discover=1 to trigger a full_teaching_cycle scrape.
   const courses = ref([])
   const coursesFetch = useScrapeAwareFetch()
+  let coursesRequestKey = null
 
   async function fetchCourses(schoolId, { year, teachingCycle } = {}) {
+    const key = JSON.stringify({ schoolId, year, teachingCycle })
+
+    if (coursesRequestKey === key && (coursesFetch.loading.value || coursesFetch.scraping.value)) {
+      return
+    }
+    coursesRequestKey = key
+
     courses.value = []
 
     const baseParams = teachingCycle ? { teaching_cycle: teachingCycle } : {}
@@ -144,8 +165,19 @@ export const useSchoolsStore = defineStore('schools', () => {
   // Same discover=1 flow as courses; course is optional.
   const disciplines = ref([])
   const disciplinesFetch = useScrapeAwareFetch()
+  let disciplinesRequestKey = null
 
   async function fetchDisciplines(schoolId, { year, teachingCycle, course } = {}) {
+    const key = JSON.stringify({ schoolId, year, teachingCycle, course })
+
+    if (
+      disciplinesRequestKey === key &&
+      (disciplinesFetch.loading.value || disciplinesFetch.scraping.value)
+    ) {
+      return
+    }
+    disciplinesRequestKey = key
+
     disciplines.value = []
 
     const baseParams = {
@@ -193,10 +225,12 @@ export const useSchoolsStore = defineStore('schools', () => {
     schoolsLoading: schoolsFetch.loading,
     schoolsScraping: schoolsFetch.scraping,
     schoolsError: schoolsFetch.error,
+    schoolsRetryAfter: schoolsFetch.retryAfter,
     schoolsPollingStatus: schoolsFetch.pollingStatus,
     fetchSchools,
 
     cycles,
+    years,
 
     districts,
     districtsLoading,
@@ -216,6 +250,7 @@ export const useSchoolsStore = defineStore('schools', () => {
     coursesLoading: coursesFetch.loading,
     coursesScraping: coursesFetch.scraping,
     coursesError: coursesFetch.error,
+    coursesRetryAfter: coursesFetch.retryAfter,
     coursesPollingStatus: coursesFetch.pollingStatus,
     fetchCourses,
 
@@ -223,6 +258,7 @@ export const useSchoolsStore = defineStore('schools', () => {
     disciplinesLoading: disciplinesFetch.loading,
     disciplinesScraping: disciplinesFetch.scraping,
     disciplinesError: disciplinesFetch.error,
+    disciplinesRetryAfter: disciplinesFetch.retryAfter,
     disciplinesPollingStatus: disciplinesFetch.pollingStatus,
     fetchDisciplines,
   }
