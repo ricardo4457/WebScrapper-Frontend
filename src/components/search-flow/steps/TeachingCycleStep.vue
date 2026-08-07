@@ -1,22 +1,11 @@
 <template>
-  <WizardStep title="Ano de Escolaridade" @back="searchStore.previousStep()">
+  <WizardStep title="Ciclo de ensino" @back="searchStore.previousStep()">
     <v-select
-      :items="years"
-      label="Escolhe o ano"
-      variant="outlined"
-      v-model="selectedYear"
-    />
-
-    <v-select
-      v-if="selectedYear && teachingTypes.length > 1"
       :items="teachingTypes"
-      label="Tipo de ensino"
+      label="Ciclo de ensino"
       variant="outlined"
-      class="mt-4"
       v-model="selectedType"
     />
-
-    <AsyncStatusBanner v-if="schoolsStore.coursesScraping" message="A confirmar cursos disponíveis..." />
 
     <v-btn
       color="primary"
@@ -33,62 +22,68 @@
 <script setup>
 import { ref, computed } from 'vue'
 import WizardStep from '../WizardStep.vue'
-import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
-import teachingCycles from '@/data/teaching-cycles.json'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 import { useSearchStore } from '@/stores/search.store.js'
+
+const confirming = ref(false)
+
+const canContinue = computed(() => !!selectedYear.value && !!selectedType.value)
 
 const schoolsStore = useSchoolsStore()
 const searchStore = useSearchStore()
 
-const years = teachingCycles.flatMap((cycle) => cycle.anos)
-
-const selectedYear = ref(null)
-const selectedType = ref(null)
-const confirming = ref(false)
+const selectedYear = ref(searchStore.selections.year)
+const selectedType = ref(searchStore.selections.teachingCycle)
 
 const teachingTypes = computed(() =>
-  selectedYear.value ? schoolsStore.getTeachingTypesForYear(selectedYear.value) : [],
+  schoolsStore.getTeachingTypesForYear(searchStore.selections.year),
 )
 
-// Se só houver um tipo de ensino possível para o ano, não há escolha a fazer.
-const resolvedType = computed(() => {
-  if (teachingTypes.value.length === 1) return teachingTypes.value[0]
-  return selectedType.value
-})
-
-const canContinue = computed(() => selectedYear.value && resolvedType.value)
-
 async function onContinue() {
+  // Validate required selections
+  if (!selectedYear.value) return
+  if (!selectedType.value) return
+
   searchStore.setSelection('year', selectedYear.value)
-  searchStore.setSelection('teachingCycle', resolvedType.value)
+  searchStore.setSelection('teachingCycle', selectedType.value)
 
   const needsCourse = schoolsStore.needsTeachingTypeStep(selectedYear.value)
 
+  // 1º/2º ciclo: no course step
   if (!needsCourse) {
-    // 1º/2º ciclo: não existe conceito de "curso" — salta sempre este passo.
     searchStore.removeStep('course')
     searchStore.setSelection('course', null)
     searchStore.nextStep()
     return
   }
 
-  // 3º ciclo / secundário: verifica se já há cursos conhecidos para esta escola.
-  confirming.value = true
-  await schoolsStore.fetchCourses(searchStore.selections.school.id, {
-    year: selectedYear.value,
-    teachingCycle: resolvedType.value,
-  })
-  confirming.value = false
-
-  if (schoolsStore.courses.length) {
+  // If no school is selected yet, continue and let CourseStep load later
+  const school = searchStore.selections.school
+  if (!school?.id) {
     searchStore.restoreStep('course')
-  } else {
-    // Escola nova, sem cursos conhecidos — salta o passo, curso fica null.
-    searchStore.removeStep('course')
-    searchStore.setSelection('course', null)
+    searchStore.nextStep()
+    return
   }
 
-  searchStore.nextStep()
+  // 3º ciclo / secundário: check cached courses
+  confirming.value = true
+
+  try {
+    await schoolsStore.fetchCourses(school.id, {
+      year: selectedYear.value,
+      teachingCycle: selectedType.value,
+    })
+
+    if (schoolsStore.courses.length) {
+      searchStore.restoreStep('course')
+    } else {
+      searchStore.removeStep('course')
+      searchStore.setSelection('course', null)
+    }
+
+    searchStore.nextStep()
+  } finally {
+    confirming.value = false
+  }
 }
 </script>
