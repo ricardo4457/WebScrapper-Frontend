@@ -41,6 +41,8 @@ function load() {
   schoolsStore.fetchSchools({
     district: searchStore.selections.district,
     city: searchStore.selections.city,
+    year: searchStore.selections.year,
+    teachingCycle: searchStore.selections.teachingCycle,
   })
 }
 
