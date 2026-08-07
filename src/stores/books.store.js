@@ -5,35 +5,65 @@ import { useScrapeAwareFetch } from '@/composables/useScrapeAwareFetch.js'
 
 export const useBooksStore = defineStore('books', () => {
   const items = ref([])
-  const loading = ref(false)
-  const error = ref(null)
 
   const currentBook = ref(null)
   const currentBookSchools = ref([])
   const detailLoading = ref(false)
   const detailError = ref(null)
 
-  async function searchByTitle(query) {
-    loading.value = true
-    error.value = null
-    try {
-      const response = await booksService.search({ q: query })
-      items.value = response.data.books.data ?? response.data.books
-    } catch (err) {
-      error.value = err.response?.data?.message ?? 'Não foi possível pesquisar livros.'
-      items.value = []
-    } finally {
-      loading.value = false
+  // All 3 search modes (school, city, q) use the same /books/search
+  // endpoint, so they share a single fetch state and request key.
+  const searchFetch = useScrapeAwareFetch()
+  let searchRequestKey = null
+
+  async function runSearch(params) {
+    const key = JSON.stringify(params)
+
+    // Same request already loading or scraping: avoid duplicate calls.
+    if (
+      searchRequestKey === key &&
+      (searchFetch.loading.value || searchFetch.scraping.value)
+    ) {
+      return
     }
+
+    searchRequestKey = key
+    items.value = []
+
+    await searchFetch.run(() => booksService.search(params), {
+      onResult: (data) => {
+        items.value = data.books?.data ?? data.books ?? []
+      },
+
+      // After scraping completes, repeat the original search.
+      onPollDone: async () => {
+        const response = await booksService.search(params)
+        items.value = response.data.books?.data ?? response.data.books ?? []
+      },
+    })
   }
 
-  // School search (final Search Wizard step). discipline only filters cached
-  // books and is never used by the scraping fallback.
-  // Repeat the original search after the scrape finishes.
+  // Title search is database-only and never triggers scraping.
+  function searchByTitle(query) {
+    return runSearch({ q: query })
+  }
 
-  const searchFetch = useScrapeAwareFetch()
+  // Search by district + city without selecting a school.
+  function searchByCity({ district, city, year, teachingCycle, discipline }) {
+    const params = {
+      district,
+      city,
+      year,
+      teaching_cycle: teachingCycle,
+      ...(discipline ? { discipline } : {}),
+    }
 
-  async function searchBySchool({
+    return runSearch(params)
+  }
+
+  // Search by school (final wizard step). discipline only filters cached
+  // books and is never sent to the scraping fallback.
+  function searchBySchool({
     school,
     district,
     city,
@@ -42,8 +72,6 @@ export const useBooksStore = defineStore('books', () => {
     course,
     discipline,
   }) {
-    items.value = []
-
     const params = {
       school,
       district,
@@ -54,16 +82,7 @@ export const useBooksStore = defineStore('books', () => {
       ...(discipline ? { discipline } : {}),
     }
 
-    await searchFetch.run(() => booksService.search(params), {
-      onResult: (data) => {
-        items.value = data.books?.data ?? data.books ?? []
-      },
-      onPollDone: async () => {
-        // Depois do scrape terminar, repete a pesquisa original.
-        const response = await booksService.search(params)
-        items.value = response.data.books?.data ?? response.data.books ?? []
-      },
-    })
+    return runSearch(params)
   }
 
   async function fetchBookById(id) {
@@ -87,17 +106,17 @@ export const useBooksStore = defineStore('books', () => {
 
   function reset() {
     items.value = []
-    error.value = null
+    searchFetch.error.value = null
+    searchRequestKey = null
   }
 
   return {
     items,
-    loading,
-    error,
 
     searchLoading: searchFetch.loading,
     searchScraping: searchFetch.scraping,
     searchError: searchFetch.error,
+    searchRetryAfter: searchFetch.retryAfter,
     searchPollingStatus: searchFetch.pollingStatus,
     searchRunId: searchFetch.runId,
 
@@ -107,6 +126,7 @@ export const useBooksStore = defineStore('books', () => {
     detailError,
 
     searchByTitle,
+    searchByCity,
     searchBySchool,
     fetchBookById,
     reset,
