@@ -2,7 +2,7 @@
   <div class="search-wizard">
     <DistrictStep v-if="searchStore.currentStepName === 'district'" />
     <CityStep v-else-if="searchStore.currentStepName === 'city'" />
-    <YearStep v-if="step === 'year'" />
+    <YearStep v-else-if="step === 'year'" />
     <SchoolStep v-else-if="searchStore.currentStepName === 'school'" />
     <TeachingCycleStep v-else-if="searchStore.currentStepName === 'teachingCycle'" />
     <CourseStep v-else-if="searchStore.currentStepName === 'course'" />
