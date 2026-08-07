@@ -3,10 +3,11 @@ import { ref, computed } from 'vue'
 
 // Wizard steps in order. 'course' is the only conditional step.
 const BASE_STEPS = [
+  'year',
+  'teachingCycle',
   'district',
   'city',
   'school',
-  'teachingCycle',
   'course',
   'discipline',
   'confirmation',
