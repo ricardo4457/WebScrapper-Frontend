@@ -7,13 +7,7 @@
       v-model="selectedType"
     />
 
-    <v-btn
-      color="primary"
-      class="mt-4"
-      :loading="confirming"
-      :disabled="!canContinue"
-      @click="onContinue"
-    >
+    <v-btn color="primary" class="mt-4" :disabled="!canContinue" @click="onContinue">
       Continuar
     </v-btn>
   </WizardStep>
@@ -24,8 +18,6 @@ import { ref, computed } from 'vue'
 import WizardStep from '../WizardStep.vue'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 import { useSearchStore } from '@/stores/search.store.js'
-
-const confirming = ref(false)
 
 const canContinue = computed(() => !!selectedYear.value && !!selectedType.value)
 
@@ -39,51 +31,40 @@ const teachingTypes = computed(() =>
   schoolsStore.getTeachingTypesForYear(searchStore.selections.year),
 )
 
-async function onContinue() {
-  // Validate required selections
+function onContinue() {
   if (!selectedYear.value) return
   if (!selectedType.value) return
 
   searchStore.setSelection('year', selectedYear.value)
   searchStore.setSelection('teachingCycle', selectedType.value)
 
+  // 1st/2nd cycle: no "course" concept — not applicable.
   const needsCourse = schoolsStore.needsTeachingTypeStep(selectedYear.value)
-
-  // 1º/2º ciclo: no course step
   if (!needsCourse) {
     searchStore.removeStep('course')
     searchStore.setSelection('course', null)
-    searchStore.nextStep()
-    return
-  }
-
-  // If no school is selected yet, continue and let CourseStep load later
-  const school = searchStore.selections.school
-  if (!school?.id) {
+  } else {
     searchStore.restoreStep('course')
-    searchStore.nextStep()
+  }
+
+  // Year and teaching_cycle are always set first.
+  // Only then do we check if prefilled data justifies skipping steps.
+  const { school, district, city } = searchStore.selections
+
+  if (school) {
+    // School already selected via quick search: skip location and course
+    // (even if applicable) — go straight to subject.
+    searchStore.goToStep('discipline')
     return
   }
 
-  // 3º ciclo / secundário: check cached courses
-  confirming.value = true
-
-  try {
-    await schoolsStore.fetchCourses(school.id, {
-      year: selectedYear.value,
-      teachingCycle: selectedType.value,
-    })
-
-    if (schoolsStore.courses.length) {
-      searchStore.restoreStep('course')
-    } else {
-      searchStore.removeStep('course')
-      searchStore.setSelection('course', null)
-    }
-
-    searchStore.nextStep()
-  } finally {
-    confirming.value = false
+  if (district && city) {
+    // Only concelho is prefilled: skip district/municipality,
+    // still need to choose a school.
+    searchStore.goToStep('school')
+    return
   }
+  // Follows default path
+  searchStore.nextStep()
 }
 </script>

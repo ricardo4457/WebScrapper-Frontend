@@ -44,7 +44,9 @@ async function load() {
   })
 }
 
-onMounted(load)
+onMounted(() => {
+  if (!schoolsStore.courses.length) load()
+})
 
 function onSelect(course) {
   searchStore.setSelection('course', course)
