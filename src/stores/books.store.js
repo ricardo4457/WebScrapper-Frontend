@@ -20,10 +20,7 @@ export const useBooksStore = defineStore('books', () => {
     const key = JSON.stringify(params)
 
     // Same request already loading or scraping: avoid duplicate calls.
-    if (
-      searchRequestKey === key &&
-      (searchFetch.loading.value || searchFetch.scraping.value)
-    ) {
+    if (searchRequestKey === key && (searchFetch.loading.value || searchFetch.scraping.value)) {
       return
     }
 
@@ -48,30 +45,9 @@ export const useBooksStore = defineStore('books', () => {
     return runSearch({ q: query })
   }
 
-  // Search by district + city without selecting a school.
-  function searchByCity({ district, city, year, teachingCycle, discipline }) {
-    const params = {
-      district,
-      city,
-      year,
-      teaching_cycle: teachingCycle,
-      ...(discipline ? { discipline } : {}),
-    }
-
-    return runSearch(params)
-  }
-
   // Search by school (final wizard step). discipline only filters cached
   // books and is never sent to the scraping fallback.
-  function searchBySchool({
-    school,
-    district,
-    city,
-    year,
-    teachingCycle,
-    course,
-    discipline,
-  }) {
+  function searchBySchool({ school, district, city, year, teachingCycle, course, discipline }) {
     const params = {
       school,
       district,
