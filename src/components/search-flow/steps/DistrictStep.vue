@@ -19,7 +19,9 @@
         class="mt-4"
         :selected-district="searchStore.selections.district"
         :selected-city="searchStore.selections.city"
-        @select="onMapSelect"
+        :sync-on-mount="false"
+        @select="onSelectFromMap"
+        @district-enter="onEnterDistrictFromMap"
       />
     </template>
   </WizardStep>
@@ -40,7 +42,7 @@ function load() {
   schoolsStore.fetchDistricts()
 }
 
-// Selecting a district, either from the list or by clicking on the map, always navigates to the CityStep, where the map is already zoomed into that district.
+// District selected from list or map.
 function onSelectDistrict(district) {
   if (!district) return
   searchStore.setSelection('district', district)
@@ -50,8 +52,22 @@ function onSelectDistrict(district) {
   searchStore.nextStep()
 }
 
-function onMapSelect({ district }) {
-  onSelectDistrict(district)
+// city selected directly from the map.
+function onSelectFromMap({ district, city }) {
+  searchStore.setSelection('district', district)
+  searchStore.setSelection('city', city)
+  searchStore.setSelection('school', null)
+  searchStore.restoreStep('city')
+  searchStore.nextStep()
+}
+
+// District or island opened on the map without selecting a city.
+function onEnterDistrictFromMap(district) {
+  if (!district) return
+  searchStore.setSelection('district', district)
+  searchStore.setSelection('city', null)
+  searchStore.setSelection('school', null)
+  searchStore.restoreStep('city')
 }
 
 onMounted(load)
