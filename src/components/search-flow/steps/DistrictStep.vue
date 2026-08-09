@@ -19,7 +19,7 @@
         class="mt-4"
         :selected-district="searchStore.selections.district"
         :selected-city="searchStore.selections.city"
-        @select="onSelectFromMap"
+        @select="onMapSelect"
       />
     </template>
   </WizardStep>
@@ -40,8 +40,8 @@ function load() {
   schoolsStore.fetchDistricts()
 }
 
-// Escolha só do distrito, seja pela lista ou clicando num distrito do
-// mapa antes de escolher o concelho. O CityStep continua no fluxo.
+// Escolher o distrito, pela lista ou clicando no mapa, segue sempre para o
+// CityStep, cujo mapa já aparece com zoom nesse distrito.
 function onSelectDistrict(district) {
   if (!district) return
   searchStore.setSelection('district', district)
@@ -51,14 +51,8 @@ function onSelectDistrict(district) {
   searchStore.nextStep()
 }
 
-// Escolher um concelho diretamente no mapa responde a este passo e ao
-// seguinte de uma vez só, por isso o CityStep e saltado.
-function onSelectFromMap({ district, city }) {
-  searchStore.setSelection('district', district)
-  searchStore.setSelection('city', city)
-  searchStore.setSelection('school', null)
-  searchStore.removeStep('city')
-  searchStore.nextStep()
+function onMapSelect({ district }) {
+  onSelectDistrict(district)
 }
 
 onMounted(load)
