@@ -18,6 +18,12 @@ const routes = [
     props: true,
   },
   {
+    path: '/books/:id/price-history',
+    name: 'book-price-history',
+    component: () => import('@/views/books/PriceHistoryView.vue'),
+    props: true,
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('@/views/NotFoundView.vue'),
