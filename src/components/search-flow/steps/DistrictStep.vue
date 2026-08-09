@@ -1,6 +1,10 @@
 <template>
-  <WizardStep title="Distrito" :show-back="false">
-    <ErrorState v-if="schoolsStore.districtsError" :message="schoolsStore.districtsError" @retry="load" />
+  <WizardStep title="Distrito" @back="searchStore.previousStep()">
+    <ErrorState
+      v-if="schoolsStore.districtsError"
+      :message="schoolsStore.districtsError"
+      @retry="load"
+    />
     <v-select
       v-else
       :items="schoolsStore.districts"
@@ -29,7 +33,7 @@ function load() {
 function onSelect(district) {
   if (!district) return
   searchStore.setSelection('district', district)
-  // Reset 
+  // Reset
   searchStore.setSelection('city', null)
   searchStore.setSelection('school', null)
   searchStore.nextStep()

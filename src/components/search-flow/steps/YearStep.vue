@@ -1,5 +1,5 @@
 <template>
-  <WizardStep title="Ano">
+  <WizardStep title="Ano" :show-back="false">
     <v-select :items="schoolsStore.years" label="Ano" variant="outlined" v-model="selectedYear" />
 
     <v-btn color="primary" class="mt-4" :disabled="!selectedYear" @click="onContinue">
