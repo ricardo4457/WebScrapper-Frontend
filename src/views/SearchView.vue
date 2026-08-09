@@ -18,6 +18,12 @@
         :error="booksStore.searchError"
         @retry="restartWizard"
       />
+      <PaginationControls
+        :page="booksStore.pagination.currentPage"
+        :last-page="booksStore.pagination.lastPage"
+        :total="booksStore.pagination.total"
+        @update:page="(page) => booksStore.goToPage(page)"
+      />
     </template>
   </PageContainer>
 </template>
@@ -26,6 +32,7 @@
 import PageContainer from '@/components/layout/PageContainer.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
 import BookList from '@/components/books/BookList.vue'
+import PaginationControls from '@/components/common/PaginationControls.vue'
 import SearchWizard from '@/components/search-flow/SearchWizard.vue'
 import SmartSearchInput from '@/components/search-flow/SmartSearchInput.vue'
 import { useBooksStore } from '@/stores/books.store.js'
