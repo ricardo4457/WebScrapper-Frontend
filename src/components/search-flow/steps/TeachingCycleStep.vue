@@ -58,12 +58,6 @@ function onContinue() {
     return
   }
 
-  if (district && city) {
-    // Only concelho is prefilled: skip district/municipality,
-    // still need to choose a school.
-    searchStore.goToStep('school')
-    return
-  }
   // Follows default path
   searchStore.nextStep()
 }
