@@ -44,7 +44,7 @@ function onSelect(city) {
   searchStore.nextStep()
 }
 
-// Escolher o concelho no mapa faz o mesmo que escolher na lista.
+// Selecting a city on the map has the same effect as selecting it from the list.
 function onSelectFromMap({ city }) {
   onSelect(city)
 }

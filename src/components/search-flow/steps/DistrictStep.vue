@@ -40,8 +40,7 @@ function load() {
   schoolsStore.fetchDistricts()
 }
 
-// Escolher o distrito, pela lista ou clicando no mapa, segue sempre para o
-// CityStep, cujo mapa já aparece com zoom nesse distrito.
+// Selecting a district, either from the list or by clicking on the map, always navigates to the CityStep, where the map is already zoomed into that district.
 function onSelectDistrict(district) {
   if (!district) return
   searchStore.setSelection('district', district)
