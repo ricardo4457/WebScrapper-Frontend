@@ -11,6 +11,10 @@ export const useBooksStore = defineStore('books', () => {
   const detailLoading = ref(false)
   const detailError = ref(null)
 
+  const priceHistory = ref([])
+  const priceHistoryLoading = ref(false)
+  const priceHistoryError = ref(null)
+
   // All 3 search modes (school, city, q) use the same /books/search
   // endpoint, so they share a single fetch state and request key.
   const searchFetch = useScrapeAwareFetch()
@@ -80,6 +84,24 @@ export const useBooksStore = defineStore('books', () => {
     }
   }
 
+  async function fetchPriceHistory(bookId) {
+    priceHistoryLoading.value = true
+    priceHistoryError.value = null
+    priceHistory.value = []
+
+    try {
+      const response = await booksService.getPriceHistory(bookId)
+      priceHistory.value = response.data.history ?? []
+    } catch (err) {
+      priceHistoryError.value =
+        err.response?.status === 404
+          ? 'Livro não encontrado.'
+          : (err.response?.data?.message ?? 'Não foi possível carregar o histórico de preços.')
+    } finally {
+      priceHistoryLoading.value = false
+    }
+  }
+
   function reset() {
     items.value = []
     searchFetch.error.value = null
@@ -101,10 +123,14 @@ export const useBooksStore = defineStore('books', () => {
     detailLoading,
     detailError,
 
+    priceHistory,
+    priceHistoryLoading,
+    priceHistoryError,
+
     searchByTitle,
-    searchByCity,
     searchBySchool,
     fetchBookById,
+    fetchPriceHistory,
     reset,
   }
 })
