@@ -13,7 +13,6 @@
 
       <PortugalMap
         class="mt-4"
-        mode="concelhos"
         :selected-district="searchStore.selections.district"
         :selected-city="searchStore.selections.city"
         @select="onSelectFromMap"
