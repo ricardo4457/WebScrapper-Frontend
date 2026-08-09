@@ -7,10 +7,7 @@
       role="img"
       aria-label="Mapa de Portugal Continental por distrito e concelho"
     >
-      <g
-        class="portugal-map__layer portugal-map__layer--distritos"
-        :class="{ 'is-hidden': view === 'concelhos' }"
-      >
+      <g v-if="mode === 'full'" class="portugal-map__layer">
         <path
           v-for="distrito in distritosData.distritos"
           :key="distrito.id"
@@ -26,7 +23,7 @@
         </path>
       </g>
 
-      <g v-if="activeGroup" class="portugal-map__layer portugal-map__layer--concelhos">
+      <g v-if="mode === 'concelhos' && activeGroup" class="portugal-map__layer">
         <path
           v-for="concelho in activeGroup.concelhos"
           :key="concelho.id"
@@ -40,14 +37,14 @@
       </g>
     </svg>
 
-    <p v-if="view === 'concelhos'" class="portugal-map__caption">
-      {{ activeDistrictName }}, escolhe o concelho
+    <p v-if="mode === 'concelhos' && activeGroup" class="portugal-map__caption">
+      {{ selectedDistrict }}, escolhe o concelho
     </p>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import distritosData from '@/data/portugal-map/distritos.json'
 import concelhosData from '@/data/portugal-map/concelhos.json'
 
@@ -58,25 +55,23 @@ const districtsWithData = new Set(
 const props = defineProps({
   selectedDistrict: { type: String, default: null },
   selectedCity: { type: String, default: null },
+  // 'full': distrito overview only, clicking a distrito emits select and the
+  // parent step navigates away (DistrictStep).
+  // 'concelhos': starts already zoomed on selectedDistrict's concelhos, no
+  // distritos layer (CityStep).
+  mode: { type: String, default: 'full' },
 })
 
 const emit = defineEmits(['select'])
 
 const FULL_VIEWBOX = distritosData.viewBox.split(' ').map(Number)
 const PADDING_RATIO = 0.18
-const ANIMATION_MS = 450
 
-const view = ref('distritos')
-const activeDistrictName = ref(null)
-const viewBox = ref(distritosData.viewBox)
-
-const activeGroup = computed(
-  () => concelhosData.distritos.find((g) => g.distrito === activeDistrictName.value) || null,
+const activeGroup = computed(() =>
+  props.mode === 'concelhos' && props.selectedDistrict
+    ? concelhosData.distritos.find((g) => g.distrito === props.selectedDistrict) || null
+    : null,
 )
-
-function currentViewBoxArray() {
-  return viewBox.value.split(' ').map(Number)
-}
 
 // Expands a bounding box to match the SVG's aspect ratio and adds padding,
 // so small districts don’t fill the frame edge to edge.
@@ -99,57 +94,20 @@ function fitBoxToAspect([xmin, ymin, xmax, ymax]) {
   return [cx - w / 2, cy - h / 2, w, h]
 }
 
-function animateViewBox(to) {
-  const from = currentViewBoxArray()
-  const start = performance.now()
-  const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2)
+const viewBox = computed(() =>
+  activeGroup.value ? fitBoxToAspect(activeGroup.value.bbox).join(' ') : distritosData.viewBox,
+)
 
-  return new Promise((resolve) => {
-    function step(now) {
-      const t = Math.min((now - start) / ANIMATION_MS, 1)
-      const e = ease(t)
-      viewBox.value = from.map((v, i) => v + (to[i] - v) * e).join(' ')
-      if (t < 1) {
-        requestAnimationFrame(step)
-      } else {
-        resolve()
-      }
-    }
-    requestAnimationFrame(step)
-  })
-}
-
-async function onDistrictClick(distrito) {
+// Selecionar um distrito no mapa passa logo para o step seguinte (Concelho),
+// tal como escolher na lista — não há zoom neste mesmo mapa.
+function onDistrictClick(distrito) {
   if (!districtsWithData.has(distrito.id)) return
-
-  activeDistrictName.value = distrito.id
-  view.value = 'concelhos'
-  await animateViewBox(fitBoxToAspect(activeGroup.value.bbox))
+  emit('select', { district: distrito.id, city: null })
 }
 
 function onConcelhoClick(concelho) {
-  emit('select', { district: activeDistrictName.value, city: concelho.id })
+  emit('select', { district: props.selectedDistrict, city: concelho.id })
 }
-
-async function goToOverview() {
-  view.value = 'distritos'
-  await animateViewBox(FULL_VIEWBOX)
-  activeDistrictName.value = null
-}
-
-// Keeps the map in sync when the district is selected from the side list
-// instead of directly on the map.
-watch(
-  () => props.selectedDistrict,
-  (district) => {
-    if (district && district !== activeDistrictName.value && districtsWithData.has(district)) {
-      const distrito = distritosData.distritos.find((d) => d.id === district)
-      if (distrito) onDistrictClick(distrito)
-    } else if (!district && view.value === 'concelhos') {
-      goToOverview()
-    }
-  },
-)
 </script>
 
 <style scoped>
@@ -189,32 +147,6 @@ watch(
 
 .portugal-map__path.is-disabled:hover {
   fill: #9e9e9e;
-}
-
-.portugal-map__layer {
-  transition: opacity 0.2s ease;
-}
-
-.portugal-map__layer.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.portugal-map__back {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  background: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .portugal-map__caption {
