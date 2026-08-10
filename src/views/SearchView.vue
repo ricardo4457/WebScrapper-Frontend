@@ -12,6 +12,10 @@
 
     <template v-else>
       <v-btn variant="text" class="mb-4" @click="restartWizard"> ← Nova pesquisa </v-btn>
+      <AsyncStatusBanner
+        v-if="booksStore.stale"
+        message="Os resultados apresentados podem estar desatualizados a atualizar dados em segundo plano..."
+      />
       <BookList
         :books="booksStore.items"
         :loading="booksStore.searchLoading"
@@ -33,6 +37,7 @@ import PageContainer from '@/components/layout/PageContainer.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
 import BookList from '@/components/books/BookList.vue'
 import PaginationControls from '@/components/common/PaginationControls.vue'
+import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
 import SearchWizard from '@/components/search-flow/SearchWizard.vue'
 import SmartSearchInput from '@/components/search-flow/SmartSearchInput.vue'
 import { useBooksStore } from '@/stores/books.store.js'
