@@ -6,17 +6,31 @@
       <v-list-item :title="`Escola: ${searchStore.selections.school?.name}`" />
       <v-list-item :title="`Ano: ${searchStore.selections.year}`" />
       <v-list-item :title="`Tipo de ensino: ${searchStore.selections.teachingCycle}`" />
-      <v-list-item v-if="searchStore.selections.course" :title="`Curso: ${searchStore.selections.course}`" />
-      <v-list-item v-if="searchStore.selections.discipline" :title="`Disciplina: ${searchStore.selections.discipline}`" />
+      <v-list-item
+        v-if="searchStore.selections.course"
+        :title="`Curso: ${searchStore.selections.course}`"
+      />
+      <v-list-item
+        v-if="searchStore.selections.discipline"
+        :title="`Disciplina: ${searchStore.selections.discipline}`"
+      />
     </v-list>
 
-    <AsyncStatusBanner v-if="booksStore.searchScraping" message="A recolher informação sobre os livros..." />
-    <ErrorState v-else-if="booksStore.searchError" :message="booksStore.searchError" @retry="onConfirm" />
+    <AsyncStatusBanner
+      v-if="booksStore.searchScraping"
+      message="A recolher informação sobre os livros..."
+    />
+    <ErrorState
+      v-else-if="booksStore.searchError"
+      :message="booksStore.searchError"
+      @retry="onConfirm"
+    />
 
     <v-btn
       color="primary"
       class="mt-4"
       :loading="booksStore.searchLoading"
+      :disabled="booksStore.searchLoading"
       @click="onConfirm"
     >
       Pesquisar Livros
