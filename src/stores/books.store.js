@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { booksService } from '@/services/books.service.js'
 import { useScrapeAwareFetch } from '@/composables/useScrapeAwareFetch.js'
+import { usePolling } from '@/composables/usePolling.js'
 
 export const useBooksStore = defineStore('books', () => {
   const items = ref([])
@@ -18,9 +19,7 @@ export const useBooksStore = defineStore('books', () => {
   const pagination = ref({ currentPage: 1, lastPage: 1, total: 0, perPage: 15 })
   let lastBaseParams = null
 
-// Extracts Laravel paginator metadata (current_page, last_page,
-// total, per_page), which sit alongside `data` in the object returned by
-// ->paginate().
+  // Extract Laravel pagination metadata.
   function extractPagination(booksPayload) {
     if (!booksPayload || Array.isArray(booksPayload)) {
       return { currentPage: 1, lastPage: 1, total: 0, perPage: 15 }
@@ -33,21 +32,28 @@ export const useBooksStore = defineStore('books', () => {
     }
   }
 
-  // All 3 search modes (school, city, q) use the same /books/search
-  // endpoint, so they share a single fetch state and request key.
+  // Shared fetch state for all search modes.
   const searchFetch = useScrapeAwareFetch()
   let searchRequestKey = null
+
+  // Separate polling for stale-data refreshes.
+  const stale = ref(false)
+  const refreshRunId = ref(null)
+  const refreshPolling = usePolling()
 
   async function runSearch(params) {
     const key = JSON.stringify(params)
 
-    // Same request already loading or scraping: avoid duplicate calls.
+    // Avoid duplicate requests while loading.
     if (searchRequestKey === key && (searchFetch.loading.value || searchFetch.scraping.value)) {
       return
     }
 
     searchRequestKey = key
     items.value = []
+    stale.value = false
+    refreshRunId.value = null
+    refreshPolling.stop()
 
     const { page, ...baseParams } = params
     lastBaseParams = baseParams
@@ -56,30 +62,53 @@ export const useBooksStore = defineStore('books', () => {
       onResult: (data) => {
         items.value = data.books?.data ?? data.books ?? []
         pagination.value = extractPagination(data.books)
+        applyStaleState(data, params)
       },
 
-      // After scraping completes, repeat the original search.
+      // Reload results after scraping finishes
       onPollDone: async () => {
         const response = await booksService.search(params)
         items.value = response.data.books?.data ?? response.data.books ?? []
         pagination.value = extractPagination(response.data.books)
+        applyStaleState(response.data, params)
       },
     })
   }
 
-  // Changes page while reusing the same filters from the last search.
+  // Active ScrapeRun statuses.
+  const REFRESH_ACTIVE_STATUSES = ['pending', 'running']
+
+  // Handle stale-data refresh polling.
+  function applyStaleState(data, params) {
+    stale.value = Boolean(data.stale)
+    refreshRunId.value = data.refresh_run_id ?? null
+
+    if (stale.value && refreshRunId.value) {
+      refreshPolling.start(refreshRunId.value, (statusData) => {
+        if (REFRESH_ACTIVE_STATUSES.includes(statusData.status)) return
+
+        // Refresh completed: reload results.
+        stale.value = false
+        booksService.search(params).then((response) => {
+          items.value = response.data.books?.data ?? response.data.books ?? []
+          pagination.value = extractPagination(response.data.books)
+        })
+      })
+    }
+  }
+
+  // Change page using the last filters.
   function goToPage(page) {
     if (!lastBaseParams) return
     return runSearch({ ...lastBaseParams, page })
   }
 
-  // Title search is database-only and never triggers scraping.
+  // Database-only title search.
   function searchByTitle(query, page = 1) {
     return runSearch({ q: query, page })
   }
 
-  // Search by school (final wizard step). discipline only filters cached
-  // books and is never sent to the scraping fallback.
+  // Search by school.
   function searchBySchool({
     school,
     district,
@@ -147,6 +176,9 @@ export const useBooksStore = defineStore('books', () => {
     searchRequestKey = null
     lastBaseParams = null
     pagination.value = { currentPage: 1, lastPage: 1, total: 0, perPage: 15 }
+    stale.value = false
+    refreshRunId.value = null
+    refreshPolling.stop()
   }
 
   return {
@@ -159,6 +191,9 @@ export const useBooksStore = defineStore('books', () => {
     searchRetryAfter: searchFetch.retryAfter,
     searchPollingStatus: searchFetch.pollingStatus,
     searchRunId: searchFetch.runId,
+
+    stale,
+    refreshRunId,
 
     currentBook,
     currentBookSchools,
