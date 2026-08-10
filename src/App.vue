@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import BottomNavigation from '@/components/layout/BottomNavigation.vue'
+import AppSnackbar from '@/components/common/AppSnackbar.vue'
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import BottomNavigation from '@/components/layout/BottomNavigation.vue'
       <router-view />
     </v-main>
     <BottomNavigation />
+    <AppSnackbar />
   </v-app>
 </template>
 
