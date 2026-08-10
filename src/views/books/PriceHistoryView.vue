@@ -12,8 +12,8 @@
       />
     </div>
 
-    <p v-if="booksStore.currentBook" class="text-h6 text-primary mb-6">
-      {{ formattedCurrentPrice }}
+    <p v-if="booksStore.currentBook" class="mb-6">
+      <PriceTag :price="booksStore.currentBook.price" size="h6" />
     </p>
 
     <template v-if="booksStore.priceHistoryLoading">
@@ -33,11 +33,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
+import PriceTag from '@/components/common/PriceTag.vue'
 import PriceHistoryChart from '@/components/history/PriceHistoryChart.vue'
 import PriceHistoryEmpty from '@/components/history/PriceHistoryEmpty.vue'
 import { useBooksStore } from '@/stores/books.store.js'
@@ -48,12 +49,6 @@ const props = defineProps({
 
 const router = useRouter()
 const booksStore = useBooksStore()
-
-const formattedCurrentPrice = computed(() => {
-  const price = booksStore.currentBook?.price
-  if (price == null) return null
-  return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(price)
-})
 
 function goBack() {
   router.push({ name: 'book-detail', params: { id: props.id } })

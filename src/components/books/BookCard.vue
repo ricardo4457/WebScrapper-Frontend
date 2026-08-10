@@ -5,22 +5,15 @@
       <v-card-subtitle v-if="book.publisher">{{ book.publisher }}</v-card-subtitle>
     </v-card-item>
     <v-card-text>
-      <span class="text-h6 text-primary">{{ formattedPrice }}</span>
+      <PriceTag :price="book.price" />
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import PriceTag from '@/components/common/PriceTag.vue'
 
-const props = defineProps({
+defineProps({
   book: { type: Object, required: true },
-})
-
-const formattedPrice = computed(() => {
-  if (props.book.price == null) return '—'
-  return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(
-    props.book.price,
-  )
 })
 </script>
