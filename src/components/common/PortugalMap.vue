@@ -238,7 +238,7 @@ watch(
 }
 
 .portugal-map__path.is-active {
-  fill: rgb(var(--v-theme-primary, 25 118 210));
+  fill: rgb(var(--v-theme-primary, 46 125 50));
 }
 
 .portugal-map__path.is-disabled {

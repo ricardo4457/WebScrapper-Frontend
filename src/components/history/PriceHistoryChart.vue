@@ -32,8 +32,8 @@ function buildChartData() {
       {
         label: 'Preço (€)',
         data: chronological.map((h) => Number(h.price)),
-        borderColor: '#1976D2',
-        backgroundColor: 'rgba(25, 118, 210, 0.1)',
+        borderColor: '#2E7D32',
+        backgroundColor: 'rgba(46, 125, 50, 0.1)',
         tension: 0.2,
         fill: true,
       },
