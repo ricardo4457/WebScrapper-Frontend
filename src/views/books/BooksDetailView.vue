@@ -21,7 +21,9 @@
         {{ booksStore.currentBook.discipline }}
       </p>
 
-      <p class="text-h5 text-primary mt-4">{{ formattedPrice }}</p>
+      <p class="mt-4">
+        <PriceTag :price="booksStore.currentBook.price" size="h5" />
+      </p>
 
       <v-btn prepend-icon="mdi-history" variant="tonal" class="mt-2" @click="goToHistory">
         Ver Histórico
@@ -44,11 +46,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
+import PriceTag from '@/components/common/PriceTag.vue'
 import { useBooksStore } from '@/stores/books.store.js'
 
 const props = defineProps({
@@ -65,12 +68,6 @@ function fetchBook() {
 function goToHistory() {
   router.push({ name: 'book-price-history', params: { id: props.id } })
 }
-
-const formattedPrice = computed(() => {
-  const price = booksStore.currentBook?.price
-  if (price == null) return '—'
-  return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(price)
-})
 
 onMounted(fetchBook)
 
