@@ -42,6 +42,8 @@ import { schoolsService } from '@/services/schools.service.js'
 import { useSearchStore } from '@/stores/search.store.js'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 
+const emit = defineEmits(['school-prefilled'])
+
 const router = useRouter()
 const searchStore = useSearchStore()
 const schoolsStore = useSchoolsStore()
@@ -145,5 +147,10 @@ function jumpAfterLocationPrefill() {
     // Course (if applicable) is skipped here and can be chosen later if needed.).
     searchStore.goToStep('discipline')
   }
+
+  // Let the parent (HomeView) know a school was prefilled, so it can
+  // switch from "Pesquisa rápida" to "Pesquisa guiada" and reveal the
+  // wizard at the step we just jumped to.
+  emit('school-prefilled')
 }
 </script>
