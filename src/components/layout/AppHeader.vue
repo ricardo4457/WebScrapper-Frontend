@@ -3,7 +3,7 @@
     <v-toolbar-title>
       <router-link to="/" class="app-title-link">
         <v-icon size="26" class="app-title-icon">mdi-book-open-page-variant-outline</v-icon>
-        Wook Scraper
+        Book Scraper
       </router-link>
     </v-toolbar-title>
 
