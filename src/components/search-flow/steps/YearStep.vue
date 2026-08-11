@@ -2,9 +2,11 @@
   <WizardStep title="Ano" :show-back="false">
     <v-select :items="schoolsStore.years" label="Ano" variant="outlined" v-model="selectedYear" />
 
-    <v-btn color="primary" class="mt-4" :disabled="!selectedYear" @click="onContinue">
-      Continuar
-    </v-btn>
+    <template #actions>
+      <button type="button" class="cta-btn" :disabled="!selectedYear" @click="onContinue">
+        Continuar
+      </button>
+    </template>
   </WizardStep>
 </template>
 <script setup>

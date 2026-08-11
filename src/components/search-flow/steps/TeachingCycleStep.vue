@@ -7,9 +7,11 @@
       v-model="selectedType"
     />
 
-    <v-btn color="primary" class="mt-4" :disabled="!canContinue" @click="onContinue">
-      Continuar
-    </v-btn>
+    <template #actions>
+      <button type="button" class="cta-btn" :disabled="!canContinue" @click="onContinue">
+        Continuar
+      </button>
+    </template>
   </WizardStep>
 </template>
 

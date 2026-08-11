@@ -20,9 +20,9 @@
       />
     </v-list>
 
-    <v-btn variant="text" class="mt-4" @click="onSkip">
-      Saltar este passo
-    </v-btn>
+    <template #actions>
+      <button type="button" class="pill-btn" @click="onSkip">Saltar este passo</button>
+    </template>
   </WizardStep>
 </template>
 

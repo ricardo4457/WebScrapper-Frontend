@@ -26,15 +26,11 @@
       @retry="onConfirm"
     />
 
-    <v-btn
-      color="primary"
-      class="mt-4"
-      :loading="booksStore.searchLoading"
-      :disabled="booksStore.searchLoading"
-      @click="onConfirm"
-    >
-      Pesquisar Livros
-    </v-btn>
+    <template #actions>
+      <button type="button" class="cta-btn" :disabled="booksStore.searchLoading" @click="onConfirm">
+        {{ booksStore.searchLoading ? 'A pesquisar…' : 'Pesquisar Livros' }}
+      </button>
+    </template>
   </WizardStep>
 </template>
 

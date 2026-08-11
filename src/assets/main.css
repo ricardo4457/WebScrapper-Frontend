@@ -1,35 +1,50 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+/* Botões do fluxo de pesquisa — mesmo formato do protótipo, cores do tema do projeto. */
+.cta-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: none;
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.cta-btn:hover:not(:disabled) {
+  background: rgba(var(--v-theme-primary), 0.85);
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.cta-btn:disabled {
+  background: rgba(var(--v-theme-on-surface), 0.26);
+  color: rgba(var(--v-theme-on-surface), 0.38);
+  cursor: not-allowed;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.pill-btn {
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 2px solid rgb(var(--v-theme-primary));
+  background: transparent;
+  color: rgb(var(--v-theme-primary));
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.pill-btn:hover:not(:disabled) {
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
+}
+
+.pill-btn:disabled {
+  border-color: rgba(var(--v-theme-on-surface), 0.26);
+  color: rgba(var(--v-theme-on-surface), 0.38);
+  cursor: not-allowed;
+  background: transparent;
 }
