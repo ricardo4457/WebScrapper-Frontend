@@ -64,7 +64,7 @@ watch(
 
 <style scoped>
 .book-accordion__panel {
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
   border: 1px solid rgb(var(--v-border-color));
 }
 

@@ -4,9 +4,9 @@
       :current="searchStore.currentStep + 1"
       :total="searchStore.activeSteps.length"
     />
-    <h2 class="text-h6 mb-4">{{ title }}</h2>
+    <h2 class="text-h6 mb-6">{{ title }}</h2>
     <slot />
-    <div class="wizard-step__actions mt-8">
+    <div class="wizard-step__actions pt-8">
       <button
         v-if="showBack"
         type="button"
@@ -43,14 +43,14 @@ const searchStore = useSearchStore()
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
 .wizard-step__primary {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   margin-inline-start: auto;
 }
 

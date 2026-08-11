@@ -66,10 +66,10 @@ function goToHistory() {
 
 .book-card-body__info {
   flex: 1 1 60%;
-  padding: 16px;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-2);
 }
 
 .book-card-body__field {
@@ -77,12 +77,11 @@ function goToHistory() {
   flex-direction: column;
   font-size: 0.875rem;
   line-height: 1.3;
-  margin-bottom: 4px;
 }
 
 .book-card-body__price-box {
   margin-top: auto;
-  padding: 12px;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
   align-items: center;

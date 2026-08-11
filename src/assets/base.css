@@ -21,6 +21,20 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
+/* Spacing scale — aligned to Vuetify's 4px spacer (mb-1 = 4px, mb-2 = 8px, ...).
+   Use these instead of arbitrary px values in scoped styles, so spacing
+   stays consistent across every component. */
+:root {
+  --space-1: 4px; /* tight inline pairs: icon + number, label + value */
+  --space-2: 8px; /* default icon/label gap, stacked field groups */
+  --space-3: 12px; /* list/card item spacing */
+  --space-4: 16px; /* component padding, heading-to-content rhythm */
+  --space-6: 24px; /* section-level gaps */
+  --space-8: 32px; /* major block separation */
+  --space-10: 40px;
+  --space-12: 48px; /* empty/error state padding */
+}
+
 /* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-white);
@@ -49,6 +63,16 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 }
+
+/* Utilitários de padding — usar em vez das classes de margem do Vuetify (mb-*, mt-*)
+   para espaçamento de bloco entre irmãos. Padding não colapsa, ao contrário de
+   margin, por isso o valor aplicado é sempre o valor real visível no ecrã. */
+.pt-3 { padding-top: var(--space-3); }
+.pt-6 { padding-top: var(--space-6); }
+.pt-8 { padding-top: var(--space-8); }
+.pb-3 { padding-bottom: var(--space-3); }
+.pb-6 { padding-bottom: var(--space-6); }
+.pb-8 { padding-bottom: var(--space-8); }
 
 *,
 *::before,

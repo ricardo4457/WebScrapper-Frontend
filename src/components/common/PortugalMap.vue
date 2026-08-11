@@ -264,6 +264,6 @@ watch(
   text-align: center;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.6);
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 </style>

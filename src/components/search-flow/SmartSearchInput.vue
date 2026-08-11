@@ -26,7 +26,7 @@
     type="info"
     variant="tonal"
     density="compact"
-    class="mt-2"
+    class="mt-4"
     closable
     @click:close="prefillMessage = null"
   >

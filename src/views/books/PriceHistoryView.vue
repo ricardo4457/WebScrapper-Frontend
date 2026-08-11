@@ -139,14 +139,14 @@ onMounted(load)
 .price-history__stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
 .price-history__stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
   min-width: 80px;
 }
 
@@ -163,7 +163,7 @@ onMounted(load)
 .price-history__trend {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: var(--space-1);
   font-size: 1rem;
 }
 

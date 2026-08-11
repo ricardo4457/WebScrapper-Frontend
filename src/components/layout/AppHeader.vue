@@ -36,8 +36,8 @@ const showBack = computed(() => route.name === 'home' && searchStore.currentStep
 .app-title-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-inline-start: 12px;
+  gap: var(--space-2);
+  margin-inline-start: var(--space-3);
   color: inherit;
   text-decoration: none;
 }

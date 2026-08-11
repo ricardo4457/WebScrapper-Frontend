@@ -153,20 +153,20 @@ watch(() => props.id, fetchBook)
   text-align: center;
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-4);
 }
 
 .book-detail__price-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: var(--space-6);
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-6);
 }
 
 .book-detail__history-btn {
-  margin-left: 4px;
+  margin-left: var(--space-2);
 }
 
 .book-detail__price {
