@@ -15,9 +15,9 @@
           </div>
 
           <p class="text-h6 font-weight-regular text-medium-emphasis text-center hero-text">
-            O Wook Scraper ajuda-te a encontrar rapidamente os manuais escolares da lista de
-            material do teu filho, comparar preços entre livrarias e acompanhar o histórico de
-            preços de cada livro, para escolheres o melhor momento e o melhor sítio para comprar.
+            O Book Scraper ajuda-te a encontrar rapidamente os manuais escolares da lista de
+            material do teu filho, visualizar preços e acompanhar o histórico de preços de cada
+            livro, para escolheres o melhor momento para comprar.
           </p>
 
           <div class="d-flex justify-center hero-btn-wrap">
@@ -117,5 +117,4 @@ function restartWizard() {
 .hero-btn-wrap {
   margin-top: var(--space-12);
 }
-
 </style>
