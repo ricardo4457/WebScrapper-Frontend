@@ -15,10 +15,9 @@
       </p>
 
       <v-sheet class="book-card-body__price-box" rounded="lg">
-        <PriceTag :price="book.price" size="h3" />
+        <PriceTag :price="book.price" size="h3" class="book-card-body__price" />
         <v-btn
-          class="mt-2"
-          size="small"
+          size="large"
           variant="outlined"
           rounded="pill"
           color="primary"
@@ -61,7 +60,7 @@ function goToHistory() {
 <style scoped>
 .book-card-body {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
 }
 
 .book-card-body__info {
@@ -80,15 +79,22 @@ function goToHistory() {
 }
 
 .book-card-body__price-box {
-  margin-top: auto;
-  padding: var(--space-4);
+  margin-top: var(--space-2);
+  padding: var(--space-4) var(--space-6);
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-4);
   text-align: center;
-  width: fit-content;
+  width: 100%;
   background-color: rgb(var(--v-theme-background)) !important;
   border: 1px solid rgb(var(--v-theme-primary));
+}
+
+.book-card-body__price {
+  font-size: 3rem !important;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 .book-card-body__cover {
