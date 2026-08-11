@@ -18,13 +18,13 @@
       <h1 class="book-detail__title">{{ booksStore.currentBook.title }}</h1>
 
       <div class="book-detail__price-row">
-        <PriceTag :price="booksStore.currentBook.price" size="h3" />
+        <span class="book-detail__price">{{ formattedPrice }}</span>
         <v-btn
           icon="mdi-history"
           variant="tonal"
           color="primary"
           size="small"
-          class="ml-2"
+          class="book-detail__history-btn"
           @click="goToHistory"
         />
       </div>
@@ -32,12 +32,11 @@
       <v-img
         v-if="booksStore.currentBook.cover_path"
         :src="booksStore.currentBook.cover_path"
-        class="book-detail__cover mx-auto"
+        class="book-detail__cover"
         rounded="lg"
-        max-width="280"
         aspect-ratio="3/4"
       />
-      <div v-else class="book-detail__cover book-detail__cover--placeholder mx-auto">
+      <div v-else class="book-detail__cover book-detail__cover--placeholder">
         <v-icon icon="mdi-book-open-page-variant-outline" size="56" />
       </div>
 
@@ -52,9 +51,13 @@
           <v-expansion-panel-text>{{ booksStore.currentBook.type }}</v-expansion-panel-text>
         </v-expansion-panel>
 
-        <v-expansion-panel v-if="booksStore.currentBook.authors">
+        <v-expansion-panel v-if="authorsList.length">
           <v-expansion-panel-title>Autores</v-expansion-panel-title>
-          <v-expansion-panel-text>{{ booksStore.currentBook.authors }}</v-expansion-panel-text>
+          <v-expansion-panel-text>
+            <v-list lines="one" class="pa-0">
+              <v-list-item v-for="(author, index) in authorsList" :key="index" :title="author" />
+            </v-list>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <v-expansion-panel v-if="booksStore.currentBook.publisher">
@@ -84,11 +87,10 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
-import PriceTag from '@/components/common/PriceTag.vue'
 import { useBooksStore } from '@/stores/books.store.js'
 
 const props = defineProps({
@@ -97,6 +99,35 @@ const props = defineProps({
 
 const router = useRouter()
 const booksStore = useBooksStore()
+
+const currencyFormatter = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' })
+
+const formattedPrice = computed(() => {
+  const price = booksStore.currentBook?.price
+  if (price == null) return '—'
+  return currencyFormatter.format(price)
+})
+
+// Authors can be returned as an array, a JSON-encoded string
+// or plain text, which is treated as a single author.
+const authorsList = computed(() => {
+  const raw = booksStore.currentBook?.authors
+  if (!raw) return []
+
+  if (Array.isArray(raw)) return raw
+
+  if (typeof raw === 'string') {
+    try {
+      const parsed = JSON.parse(raw)
+      if (Array.isArray(parsed)) return parsed
+    } catch {
+      // not JSON, treat the whole string as one author
+    }
+    return [raw]
+  }
+
+  return [String(raw)]
+})
 
 function fetchBook() {
   booksStore.fetchBookById(props.id)
@@ -129,13 +160,28 @@ watch(() => props.id, fetchBook)
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 24px;
+  width: 100%;
   margin-bottom: 24px;
 }
 
+.book-detail__history-btn {
+  margin-left: 4px;
+}
+
+.book-detail__price {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 700;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  line-height: 1;
+}
+
 .book-detail__cover {
+  display: block !important;
   width: 100%;
-  max-width: 280px;
+  max-width: 280px !important;
   aspect-ratio: 3 / 4;
+  margin: 0 auto !important;
 }
 
 .book-detail__cover--placeholder {
