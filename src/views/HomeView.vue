@@ -43,7 +43,8 @@
         <template v-else>
           <AsyncStatusBanner
             v-if="booksStore.stale"
-            message="Os resultados apresentados podem estar desatualizados a atualizar dados em segundo plano..."
+            variant="stale"
+            message="Os resultados podem estar desatualizados"
           />
           <BookList
             :books="booksStore.items"
