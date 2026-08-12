@@ -25,6 +25,17 @@ function normalizeDistrict(name) {
   return DISTRICT_ALIASES[name] ?? name
 }
 
+function isIslandOrigin(originalName) {
+  return originalName in DISTRICT_ALIASES
+}
+
+// "Ilha de São Miguel" -> "São Miguel", "Ilha da Madeira" -> "Madeira"
+function islandLabel(originalName) {
+  if (/porto santo/i.test(originalName)) return 'Porto Santo'
+  const m = originalName.match(/^Ilha\s+(?:de|do|da|das|dos)?\s*(.+)$/i)
+  return m ? m[1] : originalName
+}
+
 async function fetchJson(url) {
   const res = await fetch(url)
 
@@ -49,6 +60,26 @@ async function main() {
   const rawDistritos = unwrap(await fetchJson(`${BASE}/distritos`), 'distritos')
   const mapa = unwrap(await fetchJson(`${BASE}/distritos/municipios`), 'distritos')
 
+  // Step 1: count how many times each municipality name appears nationwide,
+  // using the ORIGINAL district name (before Açores/Madeira alias). This tells
+  // us if a name clash involves an island.
+  const nameOccurrences = new Map() // name -> count
+
+  for (const rawDistrito of rawDistritos) {
+    const original = resolveName(rawDistrito)
+    const entry = mapa.find((x) => resolveName(x) === original)
+    const municipios = entry?.municipios ?? []
+
+    municipios.forEach((m) => {
+      const name = resolveName(m)
+      if (!name) return
+      nameOccurrences.set(name, (nameOccurrences.get(name) ?? 0) + 1)
+    })
+  }
+
+  // Step 2: group by normalized district. If a municipality's name is shared
+  // with another one nationwide AND it comes from an island, add "(Island)"
+  // to match Wook's naming (e.g. "Lagoa (São Miguel)", "Calheta (Madeira)").
   const grouped = new Map()
 
   for (const rawDistrito of rawDistritos) {
@@ -62,7 +93,16 @@ async function main() {
       grouped.set(district, new Set())
     }
 
-    municipios.forEach((m) => grouped.get(district).add(m))
+    municipios.forEach((m) => {
+      const name = resolveName(m)
+      if (!name) return
+
+      const hasClash = (nameOccurrences.get(name) ?? 0) > 1
+      const finalName =
+        hasClash && isIslandOrigin(original) ? `${name} (${islandLabel(original)})` : name
+
+      grouped.get(district).add(finalName)
+    })
   }
 
   const distritos = [...grouped.entries()]
@@ -70,11 +110,10 @@ async function main() {
     .map(([name, municipios]) => ({
       name,
       concelhos: [...municipios]
-        .map(resolveName)
-        .filter(Boolean)
         .sort((a, b) => String(a).localeCompare(String(b), 'pt'))
         .map((m) => ({ name: m })),
     }))
+
   await fs.mkdir(path.dirname(OUT_PATH), { recursive: true })
 
   await fs.writeFile(OUT_PATH, JSON.stringify({ distritos }, null, 2), 'utf-8')

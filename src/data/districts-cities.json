@@ -15,7 +15,7 @@
           }
         },
         {
-          "name": "Calheta",
+          "name": "Calheta (São Jorge)",
           "coordenadas": {
             "lat": 38.6,
             "lon": -27.93
@@ -36,7 +36,7 @@
           }
         },
         {
-          "name": "Lagoa",
+          "name": "Lagoa (São Miguel)",
           "coordenadas": {
             "lat": 37.75,
             "lon": -25.58
@@ -127,17 +127,17 @@
           }
         },
         {
-          "name": "Vila do Porto",
-          "coordenadas": {
-            "lat": 36.94,
-            "lon": -25.14
-          }
-        },
-        {
           "name": "Vila Franca do Campo",
           "coordenadas": {
             "lat": 37.72,
             "lon": -25.43
+          }
+        },
+        {
+          "name": "Vila do Porto",
+          "coordenadas": {
+            "lat": 36.94,
+            "lon": -25.14
           }
         }
       ]
@@ -1390,7 +1390,7 @@
       },
       "concelhos": [
         {
-          "name": "Calheta",
+          "name": "Calheta (Madeira)",
           "coordenadas": {
             "lat": 32.72,
             "lon": -17.19
