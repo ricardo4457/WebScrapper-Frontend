@@ -1,16 +1,13 @@
 <template>
   <WizardStep title="Curso" @back="searchStore.previousStep()">
+    <AsyncStatusBanner v-if="schoolsStore.coursesScraping" message="A obter cursos..." />
     <ErrorState
-      v-if="schoolsStore.coursesError"
+      v-else-if="schoolsStore.coursesError"
       :message="schoolsStore.coursesError"
       @retry="load"
     />
 
-    <v-progress-circular
-      v-else-if="schoolsStore.coursesLoading"
-      indeterminate
-      class="d-flex mx-auto my-6"
-    />
+    <ListSkeleton v-else-if="schoolsStore.coursesLoading" />
 
     <EmptyState
       v-else-if="!schoolsStore.courses.length"
@@ -45,6 +42,8 @@ import { onMounted } from 'vue'
 import WizardStep from '../WizardStep.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
+import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
+import ListSkeleton from '@/components/common/ListSkeleton.vue'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 import { useSearchStore } from '@/stores/search.store.js'
 

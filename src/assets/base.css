@@ -1,4 +1,3 @@
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -21,9 +20,12 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* Spacing scale — aligned to Vuetify's 4px spacer (mb-1 = 4px, mb-2 = 8px, ...).
-   Use these instead of arbitrary px values in scoped styles, so spacing
-   stays consistent across every component. */
+/*
+ * Spacing scale aligned with Vuetify's 4px spacing system
+ * (mb-1 = 4px, mb-2 = 8px, etc.).
+ * These variables keep spacing consistent across components.
+ */
+
 :root {
   --space-1: 4px; /* tight inline pairs: icon + number, label + value */
   --space-2: 8px; /* default icon/label gap, stacked field groups */
@@ -35,7 +37,7 @@
   --space-12: 48px; /* empty/error state padding */
 }
 
-/* semantic color variables for this project */
+/* Semantic color variables used throughout the project */
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -64,15 +66,36 @@
   }
 }
 
-/* Utilitários de padding — usar em vez das classes de margem do Vuetify (mb-*, mt-*)
-   para espaçamento de bloco entre irmãos. Padding não colapsa, ao contrário de
-   margin, por isso o valor aplicado é sempre o valor real visível no ecrã. */
-.pt-3 { padding-top: var(--space-3); }
-.pt-6 { padding-top: var(--space-6); }
-.pt-8 { padding-top: var(--space-8); }
-.pb-3 { padding-bottom: var(--space-3); }
-.pb-6 { padding-bottom: var(--space-6); }
-.pb-8 { padding-bottom: var(--space-8); }
+/*
+ * Padding utilities used for block spacing between sibling elements.
+ * Padding is used instead of margin to avoid margin collapsing.
+ */
+.pt-3 {
+  padding-top: var(--space-3);
+}
+.pt-6 {
+  padding-top: var(--space-6);
+}
+.pt-8 {
+  padding-top: var(--space-8);
+}
+.pb-3 {
+  padding-bottom: var(--space-3);
+}
+.pb-6 {
+  padding-bottom: var(--space-6);
+}
+.pb-8 {
+  padding-bottom: var(--space-8);
+}
+
+/*
+ * Skeleton loaders: text placeholders use the project's primary color,
+ * while headings, buttons and images keep Vuetify's default color.
+ */
+.v-skeleton-loader__text {
+  background: rgba(var(--v-theme-primary), 0.3) !important;
+}
 
 *,
 *::before,

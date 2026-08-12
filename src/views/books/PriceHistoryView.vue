@@ -13,7 +13,7 @@
     </div>
 
     <template v-if="booksStore.priceHistoryLoading">
-      <v-skeleton-loader type="image" height="280" />
+      <PriceHistorySkeleton />
     </template>
 
     <ErrorState
@@ -60,6 +60,7 @@ import PageTitle from '@/components/layout/PageTitle.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
 import PriceHistoryChart from '@/components/history/PriceHistoryChart.vue'
 import PriceHistoryEmpty from '@/components/history/PriceHistoryEmpty.vue'
+import PriceHistorySkeleton from '@/components/history/PriceHistorySkeleton.vue'
 import { useBooksStore } from '@/stores/books.store.js'
 
 const props = defineProps({

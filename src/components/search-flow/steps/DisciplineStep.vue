@@ -6,8 +6,9 @@
       :message="schoolsStore.disciplinesError"
       @retry="load"
     />
+    <ListSkeleton v-else-if="schoolsStore.disciplinesLoading" />
     <EmptyState
-      v-else-if="!schoolsStore.disciplinesLoading && !schoolsStore.disciplines.length"
+      v-else-if="!schoolsStore.disciplines.length"
       title="Sem disciplinas conhecidas"
       subtitle="Podes avançar sem filtrar por disciplina."
     />
@@ -32,6 +33,7 @@ import WizardStep from '../WizardStep.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
 import EmptyState from '@/components/common/EmptyState.vue'
 import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
+import ListSkeleton from '@/components/common/ListSkeleton.vue'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 import { useSearchStore } from '@/stores/search.store.js'
 

@@ -1,7 +1,7 @@
 <template>
   <PageContainer>
     <template v-if="booksStore.detailLoading">
-      <v-skeleton-loader type="article" />
+      <BookDetailSkeleton />
     </template>
 
     <ErrorState
@@ -91,6 +91,7 @@ import { computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
+import BookDetailSkeleton from '@/components/books/BookDetailSkeleton.vue'
 import { useBooksStore } from '@/stores/books.store.js'
 
 const props = defineProps({
