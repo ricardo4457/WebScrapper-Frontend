@@ -1,7 +1,7 @@
 <template>
   <PageContainer>
     <div class="d-flex align-center mb-4">
-      <v-btn icon="mdi-arrow-left" variant="text" @click="goBack" />
+      <BackButton @click="goBack" />
       <PageTitle
         :text="
           booksStore.currentBook?.title
@@ -58,6 +58,7 @@ import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import PageTitle from '@/components/layout/PageTitle.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
+import BackButton from '@/components/common/BackButton.vue'
 import PriceHistoryChart from '@/components/history/PriceHistoryChart.vue'
 import PriceHistoryEmpty from '@/components/history/PriceHistoryEmpty.vue'
 import PriceHistorySkeleton from '@/components/history/PriceHistorySkeleton.vue'

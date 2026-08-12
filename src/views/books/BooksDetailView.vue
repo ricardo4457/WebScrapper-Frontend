@@ -12,7 +12,7 @@
 
     <template v-else-if="booksStore.currentBook">
       <div class="d-flex align-center mb-4">
-        <v-btn icon="mdi-arrow-left" variant="text" @click="goBack" />
+        <BackButton @click="goBack" />
       </div>
 
       <h1 class="book-detail__title">{{ booksStore.currentBook.title }}</h1>
@@ -92,6 +92,7 @@ import { useRouter } from 'vue-router'
 import PageContainer from '@/components/layout/PageContainer.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
 import BookDetailSkeleton from '@/components/books/BookDetailSkeleton.vue'
+import BackButton from '@/components/common/BackButton.vue'
 import { useBooksStore } from '@/stores/books.store.js'
 
 const props = defineProps({

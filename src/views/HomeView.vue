@@ -31,10 +31,7 @@
       <!-- Pesquisa guiada: wizard completo -->
       <v-window-item value="guided">
         <div class="d-flex justify-space-between align-center pb-8">
-          <button type="button" class="pill-btn" @click="mode = 'quick'">
-            <v-icon icon="mdi-chevron-left" size="20" />
-            Voltar à pesquisa rápida
-          </button>
+          <BackButton label="Voltar à pesquisa rápida" @click="mode = 'quick'" />
           <button v-if="searchDone" type="button" class="pill-btn" @click="restartWizard">
             <v-icon icon="mdi-chevron-left" size="20" />
             Nova pesquisa
@@ -69,6 +66,7 @@
 <script setup>
 import { ref } from 'vue'
 import PageContainer from '@/components/layout/PageContainer.vue'
+import BackButton from '@/components/common/BackButton.vue'
 import BookList from '@/components/books/BookList.vue'
 import PaginationControls from '@/components/common/PaginationControls.vue'
 import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
