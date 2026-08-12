@@ -32,6 +32,11 @@ export function usePolling({ intervalMs = 2000, timeoutMs = 120_000 } = {}) {
 
     if (Date.now() > deadline) {
       timedOut.value = true
+      // Treat a timeout as a terminal update too, otherwise the caller
+      // (useScrapeAwareFetch) never hears about it: scraping/loading flags
+      // stay stuck forever, and the final re-fetch after the scrape
+      // finishes never runs, even if the backend completed successfully.
+      onUpdate?.({ status: 'timeout' })
       stop()
       return
     }
@@ -46,8 +51,7 @@ export function usePolling({ intervalMs = 2000, timeoutMs = 120_000 } = {}) {
         return
       }
     } catch (err) {
-      error.value =
-        err.response?.data?.message ?? 'Não foi possível consultar o estado do scrape.'
+      error.value = err.response?.data?.message ?? 'Não foi possível consultar o estado do scrape.'
       stop()
       return
     }

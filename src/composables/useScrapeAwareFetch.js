@@ -13,7 +13,7 @@ const ACTIVE_STATUSES = ['pending', 'running']
  * scrape reaches a terminal state.
  */
 
-export function useScrapeAwareFetch() {
+export function useScrapeAwareFetch({ pollIntervalMs, pollTimeoutMs } = {}) {
   const loading = ref(false)
   const scraping = ref(false)
   const error = ref(null)
@@ -21,7 +21,10 @@ export function useScrapeAwareFetch() {
   const jobsTotal = ref(null)
   const retryAfter = ref(null)
 
-  const polling = usePolling()
+  const polling = usePolling({
+    ...(pollIntervalMs ? { intervalMs: pollIntervalMs } : {}),
+    ...(pollTimeoutMs ? { timeoutMs: pollTimeoutMs } : {}),
+  })
 
   async function run(requestFn, { onResult, onPollUpdate, onPollDone } = {}) {
     loading.value = true

@@ -72,7 +72,11 @@ export const useSchoolsStore = defineStore('schools', () => {
   // Schools for the SchoolStep. Same discover=1 pattern: try cache first,
   // fall back to a full_city scrape only if nothing is found and we have
   // enough info (district + city) to dispatch it.
-  const schoolsFetch = useScrapeAwareFetch()
+  // full_city scrapes discover every school in a concelho and can take much
+  // longer than the default 120s polling timeout, so this flow gets a
+  // longer window (10 min) to avoid the frontend giving up before the
+  // backend actually finishes.
+  const schoolsFetch = useScrapeAwareFetch({ pollTimeoutMs: 10 * 60 * 1000 })
   let schoolsRequestKey = null
 
   async function fetchSchools({ district, city, search, year, teachingCycle } = {}) {
@@ -107,9 +111,17 @@ export const useSchoolsStore = defineStore('schools', () => {
       onResult: (data) => {
         schools.value = data.schools ?? []
       },
-      onPollDone: async () => {
-        const response = await schoolsService.list(baseParams)
-        schools.value = response.data.schools ?? []
+      onPollDone: async (statusData) => {
+        // If polling gave up on a timeout instead of a real terminal status,
+        // still try the re-fetch: the scrape may well have finished on the
+        // backend by now, it's just that the frontend stopped waiting.
+        try {
+          const response = await schoolsService.list(baseParams)
+          schools.value = response.data.schools ?? []
+        } catch (err) {
+          schoolsFetch.error.value =
+            err.response?.data?.message ?? 'Não foi possível carregar as escolas depois do scrape.'
+        }
       },
     })
   }
