@@ -7,30 +7,19 @@
       @retry="load"
     />
 
-    <ListSkeleton v-else-if="schoolsStore.coursesLoading" />
-
-    <EmptyState
-      v-else-if="!schoolsStore.courses.length"
-      title="Sem cursos conhecidos"
-      subtitle="Podes avançar sem escolher curso."
+    <v-autocomplete
+      v-else
+      :items="schoolsStore.courses"
+      :loading="schoolsStore.coursesLoading"
+      :model-value="searchStore.selections.course"
+      label="Escolhe o curso"
+      no-data-text="Sem cursos conhecidos para esta escola."
+      variant="outlined"
+      @update:model-value="onSelect"
     />
 
-    <v-list v-else lines="one">
-      <v-list-item
-        v-for="course in schoolsStore.courses"
-        :key="course"
-        :title="course"
-        @click="onSelect(course)"
-      />
-    </v-list>
-
     <template #actions>
-      <button
-        v-if="!schoolsStore.coursesLoading"
-        type="button"
-        class="pill-btn"
-        @click="onSkip"
-      >
+      <button v-if="!schoolsStore.coursesLoading" type="button" class="pill-btn" @click="onSkip">
         Saltar este passo
       </button>
     </template>
@@ -41,9 +30,7 @@
 import { onMounted } from 'vue'
 import WizardStep from '../WizardStep.vue'
 import ErrorState from '@/components/common/ErrorState.vue'
-import EmptyState from '@/components/common/EmptyState.vue'
 import AsyncStatusBanner from '@/components/common/AsyncStatusBanner.vue'
-import ListSkeleton from '@/components/common/ListSkeleton.vue'
 import { useSchoolsStore } from '@/stores/schools.store.js'
 import { useSearchStore } from '@/stores/search.store.js'
 
@@ -66,6 +53,8 @@ onMounted(() => {
 })
 
 function onSelect(course) {
+  if (!course) return
+
   searchStore.setSelection('course', course)
   searchStore.nextStep()
 }
