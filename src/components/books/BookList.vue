@@ -26,6 +26,7 @@
         <v-expansion-panel-text class="book-accordion__text">
           <router-link
             :to="{ name: 'book-detail', params: { id: book.id } }"
+            target="_blank"
             class="book-accordion__link"
           >
             <BookCardBody :book="book" />

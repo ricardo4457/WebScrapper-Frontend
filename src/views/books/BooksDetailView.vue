@@ -140,7 +140,7 @@ function goToHistory() {
 }
 
 function goBack() {
-  router.back()
+  router.push({ name: 'home' })
 }
 
 onMounted(fetchBook)

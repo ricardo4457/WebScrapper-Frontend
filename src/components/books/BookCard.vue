@@ -3,6 +3,7 @@
     class="mb-3 book-card"
     variant="outlined"
     rounded="lg"
+    target="_blank"
     :to="{ name: 'book-detail', params: { id: book.id } }"
   >
     <v-card-title class="book-card__title">{{ book.title }}</v-card-title>

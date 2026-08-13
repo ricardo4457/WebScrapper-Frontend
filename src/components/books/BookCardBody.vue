@@ -53,7 +53,12 @@ const props = defineProps({
 const router = useRouter()
 
 function goToHistory() {
-  router.push({ name: 'book-price-history', params: { id: props.book.id } })
+  const route = router.resolve({
+    name: 'book-price-history',
+    params: { id: props.book.id },
+  })
+
+  window.open(route.href, '_blank')
 }
 </script>
 
