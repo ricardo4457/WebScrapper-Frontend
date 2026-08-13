@@ -19,11 +19,11 @@ Este projeto implementa uma arquitetura distribuída para um sistema de pesquisa
 
 Para executar este projeto, certifique-se de que possui os seguintes softwares instalados no seu ambiente de desenvolvimento:
 
-*   **Docker** e **Docker Compose** (recomendado para a execução dos serviços e bases de dados)
-*   **PHP** >= 8.2 (caso execute o Laravel fora de contentor)
-*   **Composer** (gestor de dependências do PHP)
-*   **Node.js** >= 18.x e **npm** / **yarn** (para o frontend e o microsserviço Node.js)
-*   **Redis** (servidor de filas, caso não utilize o Docker Compose)
+- **Docker** e **Docker Compose** (recomendado para a execução dos serviços e bases de dados)
+- **PHP** >= 8.2 (caso execute o Laravel fora de contentor)
+- **Composer** (gestor de dependências do PHP)
+- **Node.js** >= 18.x e **npm** / **yarn** (para o frontend e o microsserviço Node.js)
+- **Redis** (servidor de filas, caso não utilize o Docker Compose)
 
 ---
 
@@ -52,10 +52,10 @@ LARAVEL_API_URL=http://localhost:8000/api
 
 O sistema é composto pelas seguintes tecnologias e serviços principais:
 
-*   **Frontend (Vue.js):** Interface de utilizador responsável por iniciar pedidos de scraping, consultar estados e apresentar os resultados das pesquisas de livros.
-*   **Backend / API Principal (Laravel):** Atua como orquestrador central. Recebe os pedidos do frontend, gere a segurança, e comunica com o serviço de scraping.
-*   **Worker de Scraping (Node.js):** Um microsserviço dedicado à execução assíncrona das tarefas de extração de dados.
-*   **Mensageria e Filas (Redis + BullMQ):** Sistema escolhido para a gestão de jobs em background, devido à sua baixa latência e gestão nativa do estado das tarefas.
+- **Frontend (Vue.js):** Interface de utilizador responsável por iniciar pedidos de scraping, consultar estados e apresentar os resultados das pesquisas de livros.
+- **Backend / API Principal (Laravel):** Atua como orquestrador central. Recebe os pedidos do frontend, gere a segurança, e comunica com o serviço de scraping.
+- **Worker de Scraping (Node.js):** Um microsserviço dedicado à execução assíncrona das tarefas de extração de dados.
+- **Mensageria e Filas (Redis + BullMQ):** Sistema escolhido para a gestão de jobs em background, devido à sua baixa latência e gestão nativa do estado das tarefas.
 
 ---
 
@@ -63,10 +63,10 @@ O sistema é composto pelas seguintes tecnologias e serviços principais:
 
 O sistema implementa fronteiras estritas de segurança entre os seus componentes:
 
-| Origem | Destino | Finalidade | Mecanismo de Proteção |
-| :--- | :--- | :--- | :--- |
-| **Vue.js** | **Laravel** | Iniciar scraping, consultar estado e pesquisar livros. | API key, validação de origem (CORS) e rate limiting. |
-| **Laravel** | **Node.js** | Enviar tarefas de scraping para a fila de processamento. | Comunicação interna de rede (isolada). |
+| Origem      | Destino     | Finalidade                                                  | Mecanismo de Proteção                                         |
+| :---------- | :---------- | :---------------------------------------------------------- | :------------------------------------------------------------ |
+| **Vue.js**  | **Laravel** | Iniciar scraping, consultar estado e pesquisar livros.      | API key, validação de origem (CORS) e rate limiting.          |
+| **Laravel** | **Node.js** | Enviar tarefas de scraping para a fila de processamento.    | Comunicação interna de rede (isolada).                        |
 | **Node.js** | **Laravel** | Enviar resultados (callbacks) e atualizar estados dos jobs. | Token partilhado validado pelo middleware `VerifyNodeApiKey`. |
 
 ---
@@ -76,17 +76,21 @@ O sistema implementa fronteiras estritas de segurança entre os seus componentes
 O serviço Node.js expõe os seguintes endpoints internos para a gestão da fila de trabalhos (acessíveis apenas pelo Laravel):
 
 ### POST /scrape
+
 Inicia um novo trabalho de scraping e coloca-o na fila BullMQ.
-*   **Payload:** Requer `strategy`, `callback_url` e `run_token`.
-*   **Respostas:**
-    *   `202 Accepted`: Sucesso. Retorna o ID do job e o total de tarefas criadas.
-    *   `400 Bad Request`: Erros de validação nos parâmetros enviados.
+
+- **Payload:** Requer `strategy`, `callback_url` e `run_token`.
+- **Respostas:**
+  - `202 Accepted`: Sucesso. Retorna o ID do job e o total de tarefas criadas.
+  - `400 Bad Request`: Erros de validação nos parâmetros enviados.
 
 ### GET /scrape/:id
+
 Consulta o estado em tempo real de um trabalho de scraping.
-*   **Respostas:**
-    *   `200 OK`: Retorna o estado atual e a percentagem de progresso do job.
-    *   `404 Not Found`: Caso o ID do job não exista na fila Redis.
+
+- **Respostas:**
+  - `200 OK`: Retorna o estado atual e a percentagem de progresso do job.
+  - `404 Not Found`: Caso o ID do job não exista na fila Redis.
 
 ---
 
@@ -94,9 +98,9 @@ Consulta o estado em tempo real de um trabalho de scraping.
 
 Para o processamento assíncrono das tarefas de scraping, optou-se pela stack **Redis + BullMQ** em vez do tradicional RabbitMQ (AMQP). Os principais motivos incluem:
 
-*   **Latência e Desempenho:** Acesso direto à memória com latência reduzida.
-*   **Gestão de Estado:** Visibilidade nativa e simplificada do progresso do job, ideal para reportar o estado de volta ao Laravel e Vue.js.
-*   **Complexidade Operacional:** Implementação mais limpa e de baixo consumo de recursos através de contentores Docker.
+- **Latência e Desempenho:** Acesso direto à memória com latência reduzida.
+- **Gestão de Estado:** Visibilidade nativa e simplificada do progresso do job, ideal para reportar o estado de volta ao Laravel e Vue.js.
+- **Complexidade Operacional:** Implementação mais limpa e de baixo consumo de recursos através de contentores Docker.
 
 ---
 
@@ -122,25 +126,14 @@ Para o processamento assíncrono das tarefas de scraping, optou-se pela stack **
 
 Para garantir a integridade do código e o correto funcionamento dos microsserviços, pode executar a bateria de testes disponível em cada módulo:
 
-*   **Backend (Laravel):**
-    ```bash
-    php artisan test
-    ```
-*   **Microsserviço de Scraping (Node.js):**
-    ```bash
-    npm test
-    ```
-
----
-
-## Contribuição
-
-Contribuições são sempre bem-vindas! Se encontrar algum *bug* ou tiver sugestões de melhoria:
-1. Faça um *fork* do repositório.
-2. Crie uma branch para a sua funcionalidade (`git checkout -b feature/nova-funcionalidade`).
-3. Faça o *commit* das suas alterações (`git commit -m 'Adiciona nova funcionalidade'`).
-4. Envie para a branch (`git push origin feature/nova-funcionalidade`).
-5. Abra um *Pull Request*.
+- **Backend (Laravel):**
+  ```bash
+  php artisan test
+  ```
+- **Microsserviço de Scraping (Node.js):**
+  ```bash
+  npm test
+  ```
 
 ---
 
