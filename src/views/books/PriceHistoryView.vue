@@ -4,15 +4,12 @@
       <BackButton @click="goBack" />
     </div>
 
-    <div class="d-flex align-center mb-4">
-      <PageTitle
-        :text="
-          booksStore.currentBook?.title
-            ? `Histórico  ${booksStore.currentBook.title}`
-            : 'Histórico de Preços'
-        "
-        class="ml-2 mb-0"
-      />
+    <div class="price-history__header">
+      <PageTitle text="Histórico de Preços" class="price-history__title" />
+
+      <div v-if="booksStore.currentBook?.title" class="price-history__subtitle">
+        {{ booksStore.currentBook.title }}
+      </div>
     </div>
 
     <template v-if="booksStore.priceHistoryLoading">
@@ -31,18 +28,28 @@
       <div class="price-history__stats">
         <div class="price-history__stat">
           <span class="price-history__stat-label">Atual</span>
-          <span class="price-history__stat-value">{{ formatPrice(currentPrice) }}</span>
+          <span class="price-history__stat-value">
+            {{ formatPrice(currentPrice) }}
+          </span>
         </div>
+
         <div class="price-history__stat">
           <span class="price-history__stat-label">Mín.</span>
-          <span class="price-history__stat-value">{{ formatPrice(minPrice) }}</span>
+          <span class="price-history__stat-value">
+            {{ formatPrice(minPrice) }}
+          </span>
         </div>
+
         <div class="price-history__stat">
           <span class="price-history__stat-label">Máx.</span>
-          <span class="price-history__stat-value">{{ formatPrice(maxPrice) }}</span>
+          <span class="price-history__stat-value">
+            {{ formatPrice(maxPrice) }}
+          </span>
         </div>
+
         <div class="price-history__stat">
           <span class="price-history__stat-label">Desde o início</span>
+
           <span class="price-history__stat-value price-history__trend" :class="trendClass">
             <v-icon :icon="trendIcon" size="16" />
             {{ trendLabel }}
@@ -141,34 +148,53 @@ onMounted(load)
 </script>
 
 <style scoped>
+.price-history__header {
+  margin-bottom: 2.5rem;
+}
+
+.price-history__title {
+  margin-bottom: 0.75rem;
+}
+
+.price-history__subtitle {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  margin-top: 0.25rem;
+}
+
 .price-history__stats {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
+  align-items: flex-start;
+  column-gap: 3.5rem;
+  row-gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .price-history__stat {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0.4rem;
   min-width: 80px;
 }
 
 .price-history__stat-label {
   font-size: 0.75rem;
+  line-height: 1.2;
   color: rgba(var(--v-theme-on-surface), 0.6);
 }
 
 .price-history__stat-value {
   font-size: 1.25rem;
+  line-height: 1.4;
   font-weight: 700;
 }
 
 .price-history__trend {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 0.4rem;
   font-size: 1rem;
 }
 
@@ -179,5 +205,16 @@ onMounted(load)
 .price-history__trend--up,
 .price-history__trend--neutral {
   color: rgb(var(--v-theme-on-surface));
+}
+
+@media (max-width: 600px) {
+  .price-history__header {
+    margin-bottom: 2rem;
+  }
+
+  .price-history__stats {
+    column-gap: 2rem;
+    row-gap: 1.25rem;
+  }
 }
 </style>
