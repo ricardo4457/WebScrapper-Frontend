@@ -77,6 +77,7 @@ function onEdit(stepName) {
 async function onConfirm() {
   await booksStore.searchBySchool({
     school: searchStore.selections.school.name,
+    schoolId: searchStore.selections.school.id,
     district: searchStore.selections.district,
     city: searchStore.selections.city,
     year: searchStore.selections.year,

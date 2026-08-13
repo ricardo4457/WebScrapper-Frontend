@@ -111,6 +111,7 @@ export const useBooksStore = defineStore('books', () => {
   // Search by school.
   function searchBySchool({
     school,
+    schoolId,
     district,
     city,
     year,
@@ -126,6 +127,9 @@ export const useBooksStore = defineStore('books', () => {
       year,
       teaching_cycle: teachingCycle,
       page,
+      // Prefer school_id when available to avoid name-matching issues.
+      // Both values are sent for clarity, with school_id taking precedence.
+      ...(schoolId ? { school_id: schoolId } : {}),
       ...(course ? { course } : {}),
       ...(discipline ? { discipline } : {}),
     }
