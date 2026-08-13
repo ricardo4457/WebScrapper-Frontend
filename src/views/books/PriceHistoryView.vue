@@ -8,7 +8,7 @@
       <PageTitle
         :text="
           booksStore.currentBook?.title
-            ? `Histórico · ${booksStore.currentBook.title}`
+            ? `Histórico  ${booksStore.currentBook.title}`
             : 'Histórico de Preços'
         "
         class="ml-2 mb-0"
