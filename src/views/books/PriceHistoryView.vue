@@ -2,6 +2,9 @@
   <PageContainer>
     <div class="d-flex align-center mb-4">
       <BackButton @click="goBack" />
+    </div>
+
+    <div class="d-flex align-center mb-4">
       <PageTitle
         :text="
           booksStore.currentBook?.title
