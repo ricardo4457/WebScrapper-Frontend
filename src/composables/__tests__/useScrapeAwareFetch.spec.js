@@ -61,24 +61,26 @@ describe('useScrapeAwareFetch', () => {
     const onPollDone = vi.fn()
     const onPollUpdate = vi.fn()
 
-    const data = await run(requestFn, { onPollUpdate, onPollDone })
+    // Keep the promise pending while advancing the fake timers.
+    const resultPromise = run(requestFn, { onPollUpdate, onPollDone })
 
-    expect(data).toEqual({ run_id: 'run-42', jobs_total: 5 })
+    await vi.advanceTimersByTimeAsync(0)
+
     expect(runId.value).toBe('run-42')
     expect(jobsTotal.value).toBe(5)
     expect(scraping.value).toBe(true)
-    // loading only covers the initial request, not the polling phase.
-    expect(loading.value).toBe(false)
-
-    await vi.advanceTimersByTimeAsync(0)
+    expect(loading.value).toBe(true)
     expect(onPollUpdate).toHaveBeenCalledWith({ status: 'running' })
-    expect(scraping.value).toBe(true)
     expect(onPollDone).not.toHaveBeenCalled()
 
     await vi.advanceTimersByTimeAsync(1000)
+    const data = await resultPromise
+
+    expect(data).toEqual({ run_id: 'run-42', jobs_total: 5 })
     expect(onPollUpdate).toHaveBeenLastCalledWith({ status: 'completed' })
     expect(scraping.value).toBe(false)
     expect(onPollDone).toHaveBeenCalledWith({ status: 'completed' })
+    expect(loading.value).toBe(false)
   })
 
   it('maps a 429 response with Retry-After into a friendly, specific error', async () => {
@@ -123,7 +125,9 @@ describe('useScrapeAwareFetch', () => {
     const { run, error, retryAfter } = useScrapeAwareFetch()
 
     await expect(
-      run(vi.fn().mockRejectedValue({ response: { status: 429, headers: { 'retry-after': '5' } } })),
+      run(
+        vi.fn().mockRejectedValue({ response: { status: 429, headers: { 'retry-after': '5' } } }),
+      ),
     ).rejects.toBeTruthy()
     expect(error.value).toBe('Demasiados pedidos. Tenta novamente daqui a 5 segundos.')
     expect(retryAfter.value).toBe(5)
