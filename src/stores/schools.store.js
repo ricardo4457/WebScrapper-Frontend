@@ -136,7 +136,8 @@ export const useSchoolsStore = defineStore('schools', () => {
     const key = JSON.stringify({ schoolId, year, teachingCycle })
 
     if (coursesRequestKey === key && (coursesFetch.loading.value || coursesFetch.scraping.value)) {
-      return
+      // Skip duplicate requests while the same request is in progress.
+      return undefined
     }
     coursesRequestKey = key
 
@@ -150,9 +151,9 @@ export const useSchoolsStore = defineStore('schools', () => {
       },
     })
 
-    if (data?.courses?.length) return
+    if (data?.courses?.length) return courses.value
 
-    if (!year || !teachingCycle) return
+    if (!year || !teachingCycle) return courses.value
 
     await coursesFetch.run(
       () =>
@@ -166,12 +167,17 @@ export const useSchoolsStore = defineStore('schools', () => {
           courses.value = data.courses ?? []
         },
         onPollDone: async () => {
-          // Re-fetch cached courses after the scrape completes.
-          const response = await schoolsService.getCourses(schoolId, baseParams)
+          // Refresh courses after the scrape completes using the current year.
+          const response = await schoolsService.getCourses(schoolId, {
+            ...baseParams,
+            year,
+          })
           courses.value = response.data.courses ?? []
         },
       },
     )
+
+    return courses.value
   }
 
   // Same discover=1 flow as courses; course is optional.
@@ -222,8 +228,11 @@ export const useSchoolsStore = defineStore('schools', () => {
           disciplines.value = data.disciplines ?? []
         },
         onPollDone: async () => {
-          // Re-fetch cached disciplines after the scrape completes.
-          const response = await schoolsService.getDisciplines(schoolId, baseParams)
+          // Refresh disciplines after the scrape completes using the current year.
+          const response = await schoolsService.getDisciplines(schoolId, {
+            ...baseParams,
+            year,
+          })
           disciplines.value = response.data.disciplines ?? []
         },
       },
