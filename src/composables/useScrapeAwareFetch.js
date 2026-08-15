@@ -40,14 +40,19 @@ export function useScrapeAwareFetch({ pollIntervalMs, pollTimeoutMs } = {}) {
         runId.value = response.data.run_id
         jobsTotal.value = response.data.jobs_total
 
-        polling.start(response.data.run_id, (statusData) => {
-          onPollUpdate?.(statusData)
-          if (!ACTIVE_STATUSES.includes(statusData.status)) {
-            scraping.value = false
-            onPollDone?.(statusData)
-          }
+        // Wait for the scrape to reach a terminal state before resolving.
+        // This ensures callers receive the final data after polling completes.
+        const finalStatus = await new Promise((resolve) => {
+          polling.start(response.data.run_id, (statusData) => {
+            onPollUpdate?.(statusData)
+            if (!ACTIVE_STATUSES.includes(statusData.status)) {
+              scraping.value = false
+              resolve(statusData)
+            }
+          })
         })
 
+        await onPollDone?.(finalStatus)
         return response.data
       }
 
