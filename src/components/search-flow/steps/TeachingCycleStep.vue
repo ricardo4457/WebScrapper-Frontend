@@ -51,14 +51,7 @@ function onContinue() {
 
   // Year and teaching_cycle are always set first.
   // Only then do we check if prefilled data justifies skipping steps.
-  const { school, district, city } = searchStore.selections
-
-  if (school) {
-    // School already selected via quick search: skip location and course
-    // (even if applicable) — go straight to subject.
-    searchStore.goToStep('discipline')
-    return
-  }
+  const { school } = searchStore.selections
 
   // Follows default path
   searchStore.nextStep()

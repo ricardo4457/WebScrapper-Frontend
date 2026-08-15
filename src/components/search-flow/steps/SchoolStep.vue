@@ -52,28 +52,29 @@ function load() {
   })
 }
 
-// Year/cycle come from TeachingCycleStep; school is known here.
-// Check for cached courses and remove the 'course' step if none exist.
+// Check for cached courses and show/hide the 'course' step accordingly.
 async function onSelect(school) {
   if (!school) return
 
   searchStore.setSelection('school', { id: school.id, name: school.name })
 
-  if (searchStore.activeSteps.includes('course')) {
-    confirming.value = true
-    try {
-      await schoolsStore.fetchCourses(school.id, {
-        year: searchStore.selections.year,
-        teachingCycle: searchStore.selections.teachingCycle,
-      })
+  confirming.value = true
+  try {
+    await schoolsStore.fetchCourses(school.id, {
+      year: searchStore.selections.year,
+      teachingCycle: searchStore.selections.teachingCycle,
+    })
 
-      if (!schoolsStore.courses.length) {
-        searchStore.removeStep('course')
-        searchStore.setSelection('course', null)
-      }
-    } finally {
-      confirming.value = false
+    if (schoolsStore.courses.length) {
+      // Restore the course step if the previous school had none.
+      // No-op if it is already active.
+      searchStore.restoreStep('course')
+    } else {
+      searchStore.removeStep('course')
+      searchStore.setSelection('course', null)
     }
+  } finally {
+    confirming.value = false
   }
 
   searchStore.nextStep()
