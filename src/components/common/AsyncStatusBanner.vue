@@ -32,7 +32,7 @@ const icon = computed(() =>
 )
 
 const defaultHints = {
-  scraping: 'A verificar o site em tempo real, pode demorar alguns segundos.',
+  scraping: 'A verificar em tempo real, pode demorar alguns segundos.',
   stale: 'Os dados são atualizados assim que a pesquisa terminar.',
 }
 

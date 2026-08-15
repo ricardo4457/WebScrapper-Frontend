@@ -23,10 +23,7 @@
       @update:model-value="onSelect"
     />
 
-    <div v-if="confirming" class="d-flex align-center justify-center my-4">
-      <v-progress-circular indeterminate color="primary" size="20" width="2" class="mr-3" />
-      <span>A confirmar escola...</span>
-    </div>
+    <AsyncStatusBanner v-if="confirming" message="A verificar cursos disponíveis nesta escola..." />
   </WizardStep>
 </template>
 
@@ -52,7 +49,7 @@ function load() {
   })
 }
 
-// Check cached courses and show or hide the course step accordingly.
+// Check for cached courses and show/hide the 'course' step accordingly.
 async function onSelect(school) {
   if (!school) return
 
