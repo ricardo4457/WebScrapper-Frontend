@@ -7,6 +7,16 @@ import { usePolling } from '@/composables/usePolling.js'
 export const useBooksStore = defineStore('books', () => {
   const items = ref([])
 
+  const MIN_PER_PAGE = 5
+  const MAX_PER_PAGE = 50
+  const DEFAULT_PER_PAGE = 15
+
+  function clampPerPage(value) {
+    const n = Number(value)
+    if (!Number.isFinite(n)) return DEFAULT_PER_PAGE
+    return Math.max(MIN_PER_PAGE, Math.min(Math.trunc(n), MAX_PER_PAGE))
+  }
+
   const currentBook = ref(null)
   const currentBookSchools = ref([])
   const detailLoading = ref(false)
@@ -42,7 +52,12 @@ export const useBooksStore = defineStore('books', () => {
   const refreshPolling = usePolling()
 
   async function runSearch(params) {
-    const key = JSON.stringify(params)
+    const clampedParams = {
+      ...params,
+      ...(params.per_page !== undefined ? { per_page: clampPerPage(params.per_page) } : {}),
+    }
+
+    const key = JSON.stringify(clampedParams)
 
     // Avoid duplicate requests while loading.
     if (searchRequestKey === key && (searchFetch.loading.value || searchFetch.scraping.value)) {
@@ -55,22 +70,22 @@ export const useBooksStore = defineStore('books', () => {
     refreshRunId.value = null
     refreshPolling.stop()
 
-    const { page, ...baseParams } = params
+    const { page, ...baseParams } = clampedParams
     lastBaseParams = baseParams
 
-    await searchFetch.run(() => booksService.search(params), {
+    await searchFetch.run(() => booksService.search(clampedParams), {
       onResult: (data) => {
         items.value = data.books?.data ?? data.books ?? []
         pagination.value = extractPagination(data.books)
-        applyStaleState(data, params)
+        applyStaleState(data, clampedParams)
       },
 
       // Reload results after scraping finishes
       onPollDone: async () => {
-        const response = await booksService.search(params)
+        const response = await booksService.search(clampedParams)
         items.value = response.data.books?.data ?? response.data.books ?? []
         pagination.value = extractPagination(response.data.books)
-        applyStaleState(response.data, params)
+        applyStaleState(response.data, clampedParams)
       },
     })
   }
@@ -188,6 +203,10 @@ export const useBooksStore = defineStore('books', () => {
   return {
     items,
     pagination,
+
+    MIN_PER_PAGE,
+    MAX_PER_PAGE,
+    DEFAULT_PER_PAGE,
 
     searchLoading: searchFetch.loading,
     searchScraping: searchFetch.scraping,
