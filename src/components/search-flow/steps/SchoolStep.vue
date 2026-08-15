@@ -52,24 +52,27 @@ function load() {
   })
 }
 
-// Check for cached courses and show/hide the 'course' step accordingly.
+// Check cached courses and show or hide the course step accordingly.
 async function onSelect(school) {
   if (!school) return
+
+  // Prevent duplicate selection events while courses are being fetched.
+  if (confirming.value) return
 
   searchStore.setSelection('school', { id: school.id, name: school.name })
 
   confirming.value = true
   try {
-    await schoolsStore.fetchCourses(school.id, {
+    const result = await schoolsStore.fetchCourses(school.id, {
       year: searchStore.selections.year,
       teachingCycle: searchStore.selections.teachingCycle,
     })
 
-    if (schoolsStore.courses.length) {
-      // Restore the course step if the previous school had none.
-      // No-op if it is already active.
+    if (result?.length) {
+      // Restore the course step when courses are available.
       searchStore.restoreStep('course')
-    } else {
+    } else if (result) {
+      // Remove the course step when no courses are available.
       searchStore.removeStep('course')
       searchStore.setSelection('course', null)
     }
