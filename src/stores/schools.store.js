@@ -127,9 +127,9 @@ export const useSchoolsStore = defineStore('schools', () => {
   }
 
   // Courses are read-only by default. If none are cached, retry with
-  // discover=1 to trigger a full_teaching_cycle scrape.
+  // discover=1 to trigger a full_teaching_cycle scrape with a longer timeout.
   const courses = ref([])
-  const coursesFetch = useScrapeAwareFetch()
+  const coursesFetch = useScrapeAwareFetch({ pollTimeoutMs: 5 * 60 * 1000 })
   let coursesRequestKey = null
 
   async function fetchCourses(schoolId, { year, teachingCycle } = {}) {
@@ -176,6 +176,11 @@ export const useSchoolsStore = defineStore('schools', () => {
         },
       },
     )
+
+    if (coursesFetch.pollingTimedOut.value) {
+      // Do not treat a timeout as a confirmed empty result.
+      return null
+    }
 
     return courses.value
   }
