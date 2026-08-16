@@ -1,142 +1,122 @@
-# Sistema de Web Scraping de Livros
+# WebScrapper-Frontend
 
-Este projeto implementa uma arquitetura distribuída para um sistema de pesquisa e extração de informações sobre livros. A solução está dividida em microsserviços para garantir escalabilidade, processamento assíncrono de tarefas pesadas e uma clara separação de responsabilidades.
+Vue 3 web application for searching and consulting school textbooks collected from wook.pt. Consumes the [WebScrapperApi](https://github.com/ricardo4457/WebScrapperApi) (Laravel) and guides the user through a step-by-step wizard to reach the list of textbooks adopted by a given school, with price history and an interactive map of Portugal for geographic selection.
+
+Related repositories:
+
+- API/Backend (Laravel): [WebScrapperApi](https://github.com/ricardo4457/WebScrapperApi)
+- Scraping service (Node.js): [WebScrapper](https://github.com/ricardo4457/WebScrapper)
 
 ---
 
-## Estrutura do Repositório
+## Requirements
 
-```text
-.
-├── backend-laravel/     # API Central e orquestrador em Laravel
-├── frontend-vue/        # Interface de utilizador em Vue.js
-└── scraping-service/    # Microsserviço de scraping em Node.js
+- Node.js 18+
+- The Laravel API running and reachable (see `VITE_API_URL` below)
+
+---
+
+## Running the project
+
+```bash
+npm install
+npm run dev
 ```
 
----
+```bash
+npm run build     # production build
+npx vitest run    # Vitest unit tests
+```
 
-## Requisitos do Sistema
-
-Para executar este projeto, certifique-se de que possui os seguintes softwares instalados no seu ambiente de desenvolvimento:
-
-- **Docker** e **Docker Compose** (recomendado para a execução dos serviços e bases de dados)
-- **PHP** >= 8.2 (caso execute o Laravel fora de contentor)
-- **Composer** (gestor de dependências do PHP)
-- **Node.js** >= 18.x e **npm** / **yarn** (para o frontend e o microsserviço Node.js)
-- **Redis** (servidor de filas, caso não utilize o Docker Compose)
-
----
-
-## Variáveis de Ambiente
-
-Crie e configure os ficheiros `.env` em cada microsserviço conforme as necessidades do seu ambiente. Abaixo encontram-se as principais variáveis de configuração utilizadas (com foco no microsserviço de scraping):
+### Environment variables
 
 ```env
-# --- Redis / BullMQ ------------------------------------------------------------
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-# --- Servidor Express (rota /scrape) --------------------------------------------
-PORT=3000
-
-SCRAPE_CONCURRENCY=3
-SCRAPER_ENGINE=camoufox
-# SCRAPER_HEADLESS=true
-
-LARAVEL_API_URL=http://localhost:8000/api
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_KEY=...   # sent as X-App-Key header, validated by Laravel's VerifyAppApiKey middleware
 ```
 
 ---
 
-## Arquitetura do Sistema
+## Architecture
 
-O sistema é composto pelas seguintes tecnologias e serviços principais:
+![Frontend architecture](./docs/Arquitetura_Frontend.drawio.png)
 
-- **Frontend (Vue.js):** Interface de utilizador responsável por iniciar pedidos de scraping, consultar estados e apresentar os resultados das pesquisas de livros.
-- **Backend / API Principal (Laravel):** Atua como orquestrador central. Recebe os pedidos do frontend, gere a segurança, e comunica com o serviço de scraping.
-- **Worker de Scraping (Node.js):** Um microsserviço dedicado à execução assíncrona das tarefas de extração de dados.
-- **Mensageria e Filas (Redis + BullMQ):** Sistema escolhido para a gestão de jobs em background, devido à sua baixa latência e gestão nativa do estado das tarefas.
+The app is organized by functional domain rather than by technical type, so a change to the search flow stays confined to `search-flow/` instead of spreading across unrelated folders. Data flows top-down: **Views/Components** read from **Pinia stores**, stores call **services** for HTTP access, and services talk to the Laravel API — components never call `axios` directly.
 
----
-
-## Segurança e Fluxo de Comunicação
-
-O sistema implementa fronteiras estritas de segurança entre os seus componentes:
-
-| Origem      | Destino     | Finalidade                                                  | Mecanismo de Proteção                                         |
-| :---------- | :---------- | :---------------------------------------------------------- | :------------------------------------------------------------ |
-| **Vue.js**  | **Laravel** | Iniciar scraping, consultar estado e pesquisar livros.      | API key, validação de origem (CORS) e rate limiting.          |
-| **Laravel** | **Node.js** | Enviar tarefas de scraping para a fila de processamento.    | Comunicação interna de rede (isolada).                        |
-| **Node.js** | **Laravel** | Enviar resultados (callbacks) e atualizar estados dos jobs. | Token partilhado validado pelo middleware `VerifyNodeApiKey`. |
-
----
-
-## API de Scraping (Microsserviço Node.js)
-
-O serviço Node.js expõe os seguintes endpoints internos para a gestão da fila de trabalhos (acessíveis apenas pelo Laravel):
-
-### POST /scrape
-
-Inicia um novo trabalho de scraping e coloca-o na fila BullMQ.
-
-- **Payload:** Requer `strategy`, `callback_url` e `run_token`.
-- **Respostas:**
-  - `202 Accepted`: Sucesso. Retorna o ID do job e o total de tarefas criadas.
-  - `400 Bad Request`: Erros de validação nos parâmetros enviados.
-
-### GET /scrape/:id
-
-Consulta o estado em tempo real de um trabalho de scraping.
-
-- **Respostas:**
-  - `200 OK`: Retorna o estado atual e a percentagem de progresso do job.
-  - `404 Not Found`: Caso o ID do job não exista na fila Redis.
+```
+src/
+├── views/                  # HomeView, BooksDetailView, PriceHistoryView, NotFoundView
+├── components/
+│   ├── layout/               # AppHeader, PageContainer, PageTitle
+│   ├── common/                # ErrorState, EmptyState, PortugalMap, PriceTag, AsyncStatusBanner, ...
+│   ├── search-flow/
+│   │   ├── SearchWizard.vue    # step orchestrator
+│   │   ├── SmartSearchInput.vue # quick search with autocomplete (books + schools)
+│   │   └── steps/              # YearStep, TeachingCycleStep, DistrictStep, CityStep,
+│   │                           # SchoolStep, CourseStep, DisciplineStep, ConfirmationStep
+│   ├── books/                 # BookCard, BookList, BookCardBody, skeletons
+│   └── history/               # PriceHistoryChart, PriceHistoryEmpty, skeleton
+├── stores/                  # search.store, books.store, schools.store, app.store (Pinia)
+├── services/                # books.service, schools.service, scraper.service, locations.service
+├── composables/             # usePolling.js, useScrapeAwareFetch.js
+├── api/                     # axios.js (instance), interceptors.js (401/403 handling)
+├── data/                    # teaching-cycles.json, districts-cities.json, portugal-map/*.json (SVGs)
+└── router/                  # index.js
+```
 
 ---
 
-## Decisões de Arquitetura: Fila de Processamento
+## Core user flow: search wizard
 
-Para o processamento assíncrono das tarefas de scraping, optou-se pela stack **Redis + BullMQ** em vez do tradicional RabbitMQ (AMQP). Os principais motivos incluem:
+The wizard is the main entry point of the app: year → teaching cycle → district/city (list or interactive map) → school → course (only when the cycle has one) → discipline → confirmation → results.
 
-- **Latência e Desempenho:** Acesso direto à memória com latência reduzida.
-- **Gestão de Estado:** Visibilidade nativa e simplificada do progresso do job, ideal para reportar o estado de volta ao Laravel e Vue.js.
-- **Complexidade Operacional:** Implementação mais limpa e de baixo consumo de recursos através de contentores Docker.
+![Search wizard flow](./docs/Flow-Frontend.drawio.png)
 
----
-
-## Como Executar o Projeto
-
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/seu-utilizador/seu-repositorio.git
-   ```
-2. Suba os serviços utilizando o Docker Compose:
-   ```bash
-   docker-compose up -d
-   ```
-3. Configure as variáveis de ambiente (`.env`) nos diretórios do Laravel e do Node.js, certificando-se de partilhar o token de segurança entre eles.
-4. Execute as migrações do Laravel:
-   ```bash
-   php artisan migrate
-   ```
+`search.store.js` drives this as a dynamic step list (`activeSteps`), not a fixed sequence — steps like `course` are removed or restored at runtime depending on whether the selected school/cycle actually has one, which is why the diagram branches on _"Cycle has Course?"_ before the discipline/course steps.
 
 ---
 
-## Testes
+## Async flow: stale data & scraping polling
 
-Para garantir a integridade do código e o correto funcionamento dos microsserviços, pode executar a bateria de testes disponível em cada módulo:
+A search can return three different outcomes from the API: fresh cached data, stale cached data (shown immediately while a refresh runs in the background), or no data at all (a new scrape is triggered and the frontend polls until it completes).
 
-- **Backend (Laravel):**
-  ```bash
-  php artisan test
-  ```
-- **Microsserviço de Scraping (Node.js):**
-  ```bash
-  npm test
-  ```
+![Polling and stale-data flow](./docs/Frontend_Polling.drawio.png)
+
+This is implemented by `useScrapeAwareFetch.js` (wraps any request that may return a `202 scraping` response) and `usePolling.js` (generic polling of `GET /book-scraper/status/{runId}` with timeout handling), both consumed by `books.store.js` and `schools.store.js`.
 
 ---
 
-## Direitos de Autor e Licença
+## Actors & use cases
+
+![Use case diagram](./docs/Diagrama_Use_Case.drawio.png)
+
+From the frontend's perspective, the relevant actor is **Website User**: search for books, consult adopted books by a school, and check scraping status. The **API User**, **WebScrapper API**, and **Scraping Service** actors belong to the backend/scraper repositories and are shown here only for context on how a frontend search can indirectly trigger a scrape.
+
+---
+
+## State management (Pinia)
+
+| Store              | Responsibility                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------ |
+| `search.store.js`  | Wizard state: current step, active steps, user selections                                        |
+| `books.store.js`   | Search results, pagination, stale/refresh polling, book detail, price history                    |
+| `schools.store.js` | Districts/cities (static JSON), schools, courses, disciplines (all with scrape-on-miss fallback) |
+| `app.store.js`     | Global snackbar / init state                                                                     |
+
+---
+
+## Testing
+
+```bash
+npx vitest run
+```
+
+Vitest suite covering stores, composables (with fake timers for polling), and service wrappers — no component-level tests yet (manual validation via the running app).
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
 
 Este projeto está licenciado sob a **MIT License**. Consulte o ficheiro [LICENSE](LICENSE) para mais detalhes.
